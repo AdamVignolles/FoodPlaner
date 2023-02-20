@@ -54,7 +54,7 @@ ROOT_URLCONF = 'FoodPlaner.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [f"{str(BASE_DIR)}/FoodPlaner/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
