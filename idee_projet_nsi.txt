@@ -21,5 +21,7 @@ site de courses, repas de la semaine, plat et recette
 
 https://www.pythonanywhere.com/user/AdamVignolles/webapps/#tab_id_adamvignolles_pythonanywhere_com
 
-https://codepen.io/mamislimen/pen/jOwwLvy
-https://webdesignerwall.com/wdw-snippet/profile-settings-page-layout
+https://codepen.io/mamislimen/pen/jOwwLvy -> login
+https://webdesignerwall.com/wdw-snippet/profile-settings-page-layout -> profile page
+https://dribbble.com/shots/6077106-Diet-Plan -> planing 
+https://codepen.io/mturley/pen/gOYveOp -> liste de courses
