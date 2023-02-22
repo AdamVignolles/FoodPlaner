@@ -1,0 +1,25 @@
+site de courses, repas de la semaine, plat et recette
+
+-> base de donné:
+   - liste de courses: ajouté et retiré
+   - liste idées plat et reccette: si non present utilisé api de chat gpt pour generer
+   - liste des repas de la semaine et leur recette
+
+-> ce que doit faire le site
+   - connexion a un compte login et sign up
+   - liste des repas de la semaine quant on survole ou clique donner la recette 
+   - posibilité de demandé/selectioné des idées de  plat via bdd (peut-etre critère de selection)
+   - posibilité de créée des plat et recette plus critère de selection quantité et nb personnes
+   - possibilité de generer la liste de courses pour nb personnes
+   - possibilité de noter une recette
+   - possibilité de discuter sur une recette
+   - essayer d'integrer un moyen de partager sur les reseaux(check pill pour crée une image)
+   - afficher le plat avec le nom et une image(check dall e, midjourney) ou directement par le createur de la recette
+
+-> back end avec python et django
+-> front end avec html css js
+
+https://www.pythonanywhere.com/user/AdamVignolles/webapps/#tab_id_adamvignolles_pythonanywhere_com
+
+https://codepen.io/mamislimen/pen/jOwwLvy
+https://webdesignerwall.com/wdw-snippet/profile-settings-page-layout
