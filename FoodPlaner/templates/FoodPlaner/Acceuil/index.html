@@ -10,8 +10,54 @@
 </head>
 <body>
     <header>
-        <img src="{% static 'img/planer.png' %}">
-        <h1>FoodPlaner</h1>
+        <div class="top">
+            <div class="left cote">
+                <a href="">
+                    <img src="{% static 'img/planer.png' %}">
+                    <h1>FoodPlaner</h1>
+                </a> 
+            </div>
+            <div class="right cote">
+                <!-- buton get started who redirect in login -->
+                <a href="loggin" class="loggin-btn">Get Started</a>
+            </div>
+        </div>
+        <div class="bottom">
+            <!--nav menu-->
+            <nav>
+                <ul>
+                    <li><a href="#planifier">Planifier</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#recette">Recette</a></li>
+                    <li><a href="#partager">partager</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
+
+    <footer>
+       <div class="top">
+            <h2>FoodPlaner</h2>
+            <a href="loggin" class="loggin-btn">Get Started</a>
+       </div>
+       <div class="bottom">
+            <div class="left">
+                <h4>Nous Contacter</h4>
+                <p>email : email.email@gmail.com</p>
+                <p>tel : 06 06 06 06 06</p>
+            </div>
+            <div class="right">
+                <h4>Nos Resaux</h4>
+                <a href="https://www.facebook.com/"><img src="{% static 'img/facebook.png' %}"></a>
+                <a href="https://www.instagram.com/"><img src="{% static 'img/instagram.png' %}"></a>
+                <a href="https://twitter.com/"><img src="{% static 'img/twitter.png' %}"></a>
+                <a href="https://www.linkedin.com/"><img src="{% static 'img/linkedin.png' %}"></a>
+                <a href="https://www.tiktok.com/"><img src="{% static 'img/tiktok.png' %}"></a>
+            </div>
+       </div>
+       <!--copiryght-->
+         <div class="copiryght">
+                <p>© 2023 FoodPlaner. All rights reserved.</p>
+    </footer>
 </body>
 </html>
