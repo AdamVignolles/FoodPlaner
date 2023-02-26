@@ -21,6 +21,8 @@ from .views import acceuil, loggin
 
 urlpatterns = [
     path('', acceuil, name="Acceuil"),
+    path('acceuil/', acceuil, name="Acceuil"),
+    path('loggin/acceuil/', acceuil, name="Acceuil"),
     path('loggin/', loggin, name="Loggin"),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
