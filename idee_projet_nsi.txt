@@ -24,4 +24,6 @@ https://www.pythonanywhere.com/user/AdamVignolles/webapps/#tab_id_adamvignolles_
 https://codepen.io/mamislimen/pen/jOwwLvy -> login
 https://webdesignerwall.com/wdw-snippet/profile-settings-page-layout -> profile page
 https://dribbble.com/shots/6077106-Diet-Plan -> planing 
+check contentetitable parametre
+check menu deroulant
 https://codepen.io/mturley/pen/gOYveOp -> liste de courses

@@ -15,10 +15,15 @@
 				<form method="POST">
                     {% csrf_token %}
 					<label for="chk" aria-hidden="true">Sign up</label>
+					<!--error message django-->
+					{% if error_sign_up %}
+						<p class="error">{{ error_sign_up }}</p>
+					{% endif %}
 					<input type="text" name="txt" placeholder="User name" required="">
 					<input type="email" name="email" placeholder="Email" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
 					<button type="submit">Sign up</button>
+					
 				</form>
 			</div>
 
@@ -26,6 +31,10 @@
 				<form method="POST">
                     {% csrf_token %}   
 					<label for="chk" aria-hidden="true">Login</label>
+					<!--error message django-->
+					{% if error_loggin %}
+						<p class="error">{{ error_loggin }}</p>
+					{% endif %}
 					<input type="email" name="email" placeholder="Email" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
 					<button type="submit">Login</button>

@@ -21,7 +21,7 @@ def loggin(request):
             for user in users:
                 user = users[user]
                 if user["email"] == email or user["username"] == username:
-                    return render(request, "FoodPlaner/Loggin/index.html", {"error": "Email or username already used"})
+                    return render(request, "FoodPlaner/Loggin/index.html", {"error_sign_up": "Email or username already used"})
             # add the new user
             users[username] = {"email": email, "password": password}
 
@@ -29,7 +29,7 @@ def loggin(request):
                 json.dump(users, file)
 
             # retourner a la page d'acceuil
-            return redirect("/acceuil/")
+            return redirect("/")
         else : 
             email = str(request.POST["email"])
             password = str(request.POST["pswd"])
@@ -42,9 +42,9 @@ def loggin(request):
                 user = users[user]
                 if user["email"] == email and user["password"] == password:
                     # retourner a la page d'acceuil
-                    return redirect("/acceuil/")
+                    return redirect("/")
                 
-            return render(request, "FoodPlaner/Loggin/index.html", {"error": "Email or password incorrect"})
+            return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect"})
 
         
 
