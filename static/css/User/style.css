@@ -1,0 +1,54 @@
+body{
+    padding: 0%;
+    margin: 0%;
+}
+main{
+    display: flex;
+}
+
+.menu{
+    margin: 30px;
+    padding: 10px;
+    display : flex;
+    flex-direction: column;
+    width: 30%;
+    height: 275px;
+    box-shadow: 0 0 10px #999;
+    border-radius: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: #000;
+    font-size: large;
+    padding-top: 10px;
+    padding-left: 30px;
+    padding-bottom: 10px;
+    border: 1px solid #999;
+}
+a:hover{
+    /* add profondity to the shadow */
+    box-shadow: 0 0 10px #999;
+
+}
+a:active{
+    background-color: #999;
+}
+
+.card{
+    box-shadow: 0 0 10px #999;
+    border-radius: 10px;
+    margin: 30px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+}
+.hide{
+    display: none;
+}
+.show{
+    display: flex;
+}
+
+

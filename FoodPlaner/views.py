@@ -29,7 +29,7 @@ def loggin(request):
                 json.dump(users, file)
 
             # retourner a la page d'acceuil
-            return redirect("/")
+            return redirect("/user")
         else : 
             email = str(request.POST["email"])
             password = str(request.POST["pswd"])
@@ -42,7 +42,7 @@ def loggin(request):
                 user = users[user]
                 if user["email"] == email and user["password"] == password:
                     # retourner a la page d'acceuil
-                    return redirect("/")
+                    return redirect("/user")
                 
             return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect"})
 
@@ -50,3 +50,6 @@ def loggin(request):
 
     else:
         return render(request, "FoodPlaner/Loggin/index.html")
+    
+def user(request):
+    return render(request, "FoodPlaner/User/index.html")

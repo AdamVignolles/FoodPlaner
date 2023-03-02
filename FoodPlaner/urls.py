@@ -17,12 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import acceuil, loggin
+from .views import acceuil, loggin, user
 
 urlpatterns = [
     path('', acceuil, name="Acceuil"),
     path('acceuil/', acceuil, name="Acceuil"),
-    path('loggin/acceuil/', acceuil, name="Acceuil"),
+    path('user/', user, name="User"),
     path('loggin/', loggin, name="Loggin"),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
