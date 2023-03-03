@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.conf import settings
 import json
 import os
 
@@ -29,7 +30,7 @@ def loggin(request):
                 json.dump(users, file)
 
             # retourner a la page d'acceuil
-            return redirect("/user")
+            return redirect("/planning")
         else : 
             email = str(request.POST["email"])
             password = str(request.POST["pswd"])
@@ -42,7 +43,7 @@ def loggin(request):
                 user = users[user]
                 if user["email"] == email and user["password"] == password:
                     # retourner a la page d'acceuil
-                    return redirect("/user")
+                    return redirect("/planning")
                 
             return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect"})
 
@@ -53,3 +54,15 @@ def loggin(request):
     
 def user(request):
     return render(request, "FoodPlaner/User/index.html")
+
+def planning(request):
+    path = settings.STATIC_URL + "img/avatar"
+
+    img_list = os.listdir(BASE_DIR + path + "/")
+    print(img_list[0])
+    base_image = "http://127.0.0.1:8000/static/img/avatar/" + img_list[1]
+    content = {"base_image": base_image}
+    return render(request, "FoodPlaner/Planning/index.html", content)
+
+def recette(request):
+    return render(request, "FoodPlaner/Recette/index.html")

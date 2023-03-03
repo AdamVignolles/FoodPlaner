@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Planning Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/Planning/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav role="navigation">
+            <div id="menuToggle">
+                <input type="checkbox" />
+
+                <span></span>
+                <span></span>
+                <span></span>
+                
+                <ul id="menu">
+                    <a href="#"><li>Home</li></a>
+                    <a href="#"><li>About</li></a>
+                    <a href="#"><li>Info</li></a>
+                    <a href="#"><li>Contact</li></a>
+                    <a href="https://erikterwan.com/" target="_blank"><li>Show me more</li></a>
+                </ul>
+            </div>
+        </nav>
+        <a href="/">
+            <h1>FoodPlaner</h1>
+        </a>
+        <!--add user image specifique at this user-->
+        {{base_image}}
+        <a href="/user">
+            <img src="{{base_image}}" with="64px" height="64px" alt="{{base_image}}">
+        </a>
+
+    </header>
+</body>
+</html>
