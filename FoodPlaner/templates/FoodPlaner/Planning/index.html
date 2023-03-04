@@ -18,11 +18,11 @@
                 <span></span>
                 
                 <ul id="menu">
-                    <a href="#"><li>Home</li></a>
-                    <a href="#"><li>About</li></a>
-                    <a href="#"><li>Info</li></a>
-                    <a href="#"><li>Contact</li></a>
-                    <a href="https://erikterwan.com/" target="_blank"><li>Show me more</li></a>
+                    <a href="#"><li>Planning</li></a>
+                    <a href="#"><li>Recette</li></a>
+                    <a href="#"><li>Liste de Course</li></a>
+                    <a href="#"><li>Profile</li></a>
+                    <a href="#"><li>Logout</li></a>
                 </ul>
             </div>
         </nav>
@@ -31,10 +31,27 @@
         </a>
         <!--add user image specifique at this user-->
         {{base_image}}
-        <a href="/user">
+        <!--
+        <form method="POST" name="page_user" onsubmit="DoSubmit()">
+            {% csrf_token %}
+            <button type="submit" name="user_page" value="user_page">
+                <img src="{{base_image}}" with="64px" height="64px" alt="{{base_image}}">
+            </button>
+        -->
+        <a href="/user" class="user_image">
             <img src="{{base_image}}" with="64px" height="64px" alt="{{base_image}}">
         </a>
-
     </header>
+
+    <script>
+        localStorage.setItem("username", "{{ username }}");
+
+        function DoSubmit(){
+            let username = localStorage.getItem("username");
+
+            document.page_user.user_page.value = username;
+
+        }
+    </script>
 </body>
 </html>

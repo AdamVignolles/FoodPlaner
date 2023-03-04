@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import acceuil, loggin, user, planning, recette
+from .views import acceuil, loggin, user, planning
 
 urlpatterns = [
     path('', acceuil, name="Acceuil"),
@@ -25,7 +25,6 @@ urlpatterns = [
     path('user/', user, name="User"),
     path('loggin/', loggin, name="Loggin"),
     path('planning/', planning, name="Planning"),
-    path('recette/', recette, name="Recette"),
     path('admin/', admin.site.urls),
 ] 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="{% static 'css/User/style.css' %}">
-    <title>User Page</title>
+    <link rel="stylesheet" href="{% static 'css/User/style.css' %}">    <title>User Page</title>
 </head>
 <body>
     <main>
@@ -44,9 +43,15 @@
                 <h1>Logout</h1>
                 <form method="POST">
                     {% csrf_token %}
-                    <button type="submit">Logout</button>
+                    <button type="submit" name="logout" value="logout">Logout</button>
                 </form>
             </div>
+
+        </div>
+        <h1>{{ username }}</h1>
+        <form name="user_form" >
+            <button name="user" value="{{ username }}"></button>
+        </form>
     </main>
     <script>
         const menu = document.querySelector('.menu');
@@ -78,6 +83,24 @@
                 }
             }
         });
+
+
+        window.onload = (event) => {
+            let username = localStorage.getItem('username');
+            document.forms["user_form"].elements["user"].value = username;
+
+            // submit form
+            if (document.forms["user_form"].elements["user"].value != username) {
+                console.log(typeof document.forms["user_form"].elements["user"].value);
+                console.log(typeof username);
+                console.log (document.forms["user_form"].elements["user"].value);
+                console.log (username);
+                
+                document.forms["user_form"].submit();
+            }
+            
+        };
+
     </script>
 
 
