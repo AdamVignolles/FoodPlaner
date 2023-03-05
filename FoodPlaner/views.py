@@ -59,16 +59,17 @@ def user(request, user=None):
                 with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
                     users = json.load(file)
                 users[user]["loggin"] = False
-                print(users[user]["loggin"])
                 with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                     json.dump(users, file)
                 return redirect("/")
-        if request.POST.get("user") != None:
+        print(request.POST, "post")
+        if "user" in request.POST:
+            print(request.POST.get("user"), "user")
             current_user = request.POST.get("user")
             return render(request, "FoodPlaner/User/index.html", {"username": current_user})
             return redirect("/loggin")
 
-    return render(request, "FoodPlaner/User/index.html")
+    return render(request, "FoodPlaner/User/index.html", {"username": user})
 
 def planning(request, user=None):
 
@@ -80,7 +81,6 @@ def planning(request, user=None):
         path = settings.STATIC_URL + "img/avatar"
 
         img_list = os.listdir(BASE_DIR + path + "/")
-        print(img_list[0])
         base_image = "http://127.0.0.1:8000/static/img/avatar/" + img_list[1]
         content = {"base_image": base_image, "username": user}
         return render(request, "FoodPlaner/Planning/index.html", content)

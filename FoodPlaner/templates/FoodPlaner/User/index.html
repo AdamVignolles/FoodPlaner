@@ -48,9 +48,9 @@
             </div>
 
         </div>
-        <h1>{{ username }}</h1>
-        <form name="user_form" >
-            <button name="user" value="{{ username }}"></button>
+        <form name="user_form" method="POST" >
+            {% csrf_token %}
+            <input style="display:none" type="text" id="username" name="user" value="{{ username }}">
         </form>
     </main>
     <script>
@@ -87,16 +87,16 @@
 
         window.onload = (event) => {
             let username = localStorage.getItem('username');
-            document.forms["user_form"].elements["user"].value = username;
 
             // submit form
-            if (document.forms["user_form"].elements["user"].value != username) {
+            if (document.getElementById("username").value != username) {
                 console.log(typeof document.forms["user_form"].elements["user"].value);
                 console.log(typeof username);
-                console.log (document.forms["user_form"].elements["user"].value);
+                console.log (document.getElementById("username").value);
                 console.log (username);
-                
-                document.forms["user_form"].submit();
+                document.getElementById("username").value = username;
+                console.log (document.getElementById("username").value);
+                document.user_form.submit();
             }
             
         };
