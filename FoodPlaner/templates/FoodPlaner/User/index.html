@@ -90,12 +90,7 @@
 
             // submit form
             if (document.getElementById("username").value != username) {
-                console.log(typeof document.forms["user_form"].elements["user"].value);
-                console.log(typeof username);
-                console.log (document.getElementById("username").value);
-                console.log (username);
                 document.getElementById("username").value = username;
-                console.log (document.getElementById("username").value);
                 document.user_form.submit();
             }
             

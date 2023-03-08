@@ -62,12 +62,9 @@ def user(request, user=None):
                 with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                     json.dump(users, file)
                 return redirect("/")
-        print(request.POST, "post")
         if "user" in request.POST:
-            print(request.POST.get("user"), "user")
             current_user = request.POST.get("user")
             return render(request, "FoodPlaner/User/index.html", {"username": current_user})
-            return redirect("/loggin")
 
     return render(request, "FoodPlaner/User/index.html", {"username": user})
 
@@ -89,9 +86,3 @@ def planning(request, user=None):
     else:
         return redirect("/loggin")
     
-    """
-    if request.method == "POST":
-        # click on user button
-        if request.POST.get("user_page") != None:
-            return user(request, user=request.POST.get("user_page"))
-    """
