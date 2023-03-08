@@ -63,8 +63,12 @@ def user(request, user=None):
                     json.dump(users, file)
                 return redirect("/")
         if "user" in request.POST:
+            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
+                users = json.load(file)
             current_user = request.POST.get("user")
-            return render(request, "FoodPlaner/User/index.html", {"username": current_user})
+            return render(request, "FoodPlaner/User/index.html", {"username": current_user, "email": users[current_user]["email"]})
+        if "logout" in request.POST:
+            return redirect("/")
 
     return render(request, "FoodPlaner/User/index.html", {"username": user})
 

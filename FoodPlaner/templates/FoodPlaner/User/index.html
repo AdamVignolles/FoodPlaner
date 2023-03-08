@@ -18,8 +18,9 @@
         <div class="content">
             <div class="account shox card">
                 <h1>Account</h1>
-                <p>Username: {{ user.username }}</p>
-                <p>Email: {{ user.email }}</p>
+                <p>Username: {{ username }}</p>
+                <p>Email: {{ email }}</p>
+
             </div>
             <div class="password hide card">
                 <h1>Password</h1>
@@ -43,7 +44,7 @@
                 <h1>Logout</h1>
                 <form method="POST">
                     {% csrf_token %}
-                    <button type="submit" name="logout" value="logout">Logout</button>
+                    <button type="submit" name="logout" value="logout" onclick="logout_user()">Logout</button>
                 </form>
             </div>
 
@@ -94,6 +95,10 @@
                 document.user_form.submit();
             }
             
+        };
+
+        function logout_user() {
+            localStorage.removeItem('username');
         };
 
     </script>
