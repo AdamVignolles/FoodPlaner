@@ -66,10 +66,35 @@ def user(request, user=None):
             with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
                 users = json.load(file)
             current_user = request.POST.get("user")
-            return render(request, "FoodPlaner/User/index.html", {"username": current_user, "email": users[current_user]["email"]})
+            return render(request, "FoodPlaner/User/index.html", {"username": current_user, "error": False,"email": users[current_user]["email"]})
         if "logout" in request.POST:
             return redirect("/")
-
+        if "change_password" in request.POST:
+            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
+                users = json.load(file)
+            user = request.POST.get("change_password").split(" ")[1]
+            if request.POST.get("old_password") == users[user]["password"]:
+                if request.POST.get("new_password") != request.POST.get("new_password2"):
+                    return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": "The new password is not the same"})
+                else:
+                    users[user]["password"] = request.POST.get("new_password")
+                    with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
+                        json.dump(users, file)
+                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": False, "password_changed": True})
+            else:
+                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": "The old password is incorrect"})
+        if "delete_account" in request.POST:
+            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
+                users = json.load(file)
+            user = request.POST.get("delete_account")
+            if request.POST.get("password") == users[user]["password"]:
+                del users[user]
+                with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
+                    json.dump(users, file)
+                return redirect("/")
+            else:
+                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": "The password is incorrect"})
+                
     return render(request, "FoodPlaner/User/index.html", {"username": user})
 
 def planning(request, user=None):
