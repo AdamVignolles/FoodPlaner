@@ -19,7 +19,7 @@ main{
     border-radius: 10px;
 }
 
-a{
+.menu a{
     text-decoration: none;
     color: #000;
     font-size: large;
@@ -28,12 +28,12 @@ a{
     padding-bottom: 10px;
     border: 1px solid #999;
 }
-a:hover{
+.menu a:hover{
     /* add profondity to the shadow */
     box-shadow: 0 0 10px #999;
 
 }
-a:active{
+.menu a:active{
     background-color: #999;
 }
 
@@ -52,5 +52,4 @@ a:active{
 .show{
     display: flex;
 }
-
 

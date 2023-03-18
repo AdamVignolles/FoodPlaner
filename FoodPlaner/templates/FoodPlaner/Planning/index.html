@@ -18,11 +18,11 @@
                 <span></span>
                 
                 <ul id="menu">
-                    <a href="#"><li>Planning</li></a>
-                    <a href="#"><li>Recette</li></a>
-                    <a href="#"><li>Liste de Course</li></a>
-                    <a href="#"><li>Profile</li></a>
-                    <a href="#"><li>Logout</li></a>
+                    <a href="#planning"><li>Planning</li></a>
+                    <a href="#recette"><li>Recette</li></a>
+                    <a href="#liste-de-course"><li>Liste de Course</li></a>
+                    <a href="/user/"><li>Profile</li></a>
+                    <a href="/user/#logout"><li>Logout</li></a>
                 </ul>
             </div>
         </nav>
@@ -35,6 +35,18 @@
         </a>
     </header>
 
+    <div class="content">
+        <div id="planning" class="show card">
+            <h1>Planning</h1>
+        </div>
+        <div id="recette" class="hide card">
+            <h1>Recette</h1>
+        </div>
+        <div id="liste-de-course" class="hide card">
+            <h1>Liste de Course</h1>
+        </div>
+    </div>
+
     <script>
         localStorage.setItem("username", "{{ username }}");
 
@@ -43,6 +55,30 @@
 
             document.page_user.user_page.value = username;
 
+        }
+        const card = document.querySelectorAll('.card');
+        const links = document.querySelectorAll('#menu a');
+        const planning = document.getElementById('planning');
+        const recette = document.getElementById('recette');
+        const liste_de_course = document.getElementById('liste-de-course');
+
+        for (let i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function() {
+                for (let j = 0; j < card.length; j++) {
+                    card[j].classList.remove('show');
+                    card[j].classList.add('hide');
+                }
+                if (links[i].hash == "#planning") {
+                    planning.classList.remove('hide');
+                    planning.classList.add('show');
+                } else if (links[i].hash == "#recette") {
+                    recette.classList.remove('hide');
+                    recette.classList.add('show');
+                } else if (links[i].hash == "#liste-de-course") {
+                    liste_de_course.classList.remove('hide');
+                    liste_de_course.classList.add('show');
+                }
+            });
         }
     </script>
 </body>
