@@ -1,1 +1,1 @@
-{"adam": {"email": "adam.vignolles@gmail.com", "password": "Adam2006", "loggin": true, "username": "adam", "avatar": "basic.png"}}
+{"adam": {"email": "adam.vignolles@gmail.com", "password": "Adam2006", "loggin": true, "username": "adam", "avatar": "basic.png", "recettes_favorites": {"1":{"id":"1", "nom": "pattes carbo", "author":"adam", "img":"meal.png"}}}}

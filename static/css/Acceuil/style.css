@@ -98,3 +98,6 @@ footer .copiright {
     text-align: center;
     margin-top: 40px;
 }
+.left img{
+    border-radius: 5px;
+}

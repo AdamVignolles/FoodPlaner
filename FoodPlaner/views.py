@@ -108,7 +108,11 @@ def planning(request, user=None):
 
         img_list = os.listdir(BASE_DIR + path + "/")
         base_image = "http://127.0.0.1:8000/static/img/avatar/" + img_list[1]
-        content = {"base_image": base_image, "username": user}
+        link_image = "http://127.0.0.1:8000/static/img/"
+        recettes_favorites = users[user]["recettes_favorites"] 
+        for recette in recettes_favorites:
+            recettes_favorites[recette]['img'] = link_image + recettes_favorites[recette]["img"]
+        content = {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites}
         return render(request, "FoodPlaner/Planning/index.html", content)
     
     

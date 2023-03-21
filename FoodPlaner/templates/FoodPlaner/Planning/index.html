@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Planning Page</title>
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/icon type">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/Planning/style.css' %}">
 </head>
@@ -40,7 +41,30 @@
             <h1>Planning</h1>
         </div>
         <div id="recette" class="hide card">
-            <h1>Recette</h1>
+            <div class="nav_recette hide">
+                <nav>
+                    <ul>
+                        <a href="#favorite">Mes Favoris</a>
+                        <a href="#creation">Mes Creation</a>
+                        <a href="#rechercher_recette">Rechercher</a>
+                    </ul>
+                </nav>
+            </div>
+            <div class="part_recette hide">
+                <div id="favorite" class="hide">
+                    <h3>Mes Favorites</h3>
+                    {% for id, recette in recettes_favorites.items %}
+                        <div class="recette_card">
+                            <img src="{{recette.img}}" width="64px">
+                            <h4>{{ recette.nom }}</h4>
+                            <p>{{recette.author}}</p>
+                            <img src="{% static 'img/liked.png' %}">
+                        </div>
+                    {% endfor %}
+                </div>
+                <div id="creation" class="hide"></div>
+                <div id="rechercher_recette" class="hide"></div>
+            </div>
         </div>
         <div id="liste-de-course" class="hide card">
             <h1>Liste de Course</h1>
@@ -61,20 +85,53 @@
         const planning = document.getElementById('planning');
         const recette = document.getElementById('recette');
         const liste_de_course = document.getElementById('liste-de-course');
+        let nav_recette = document.querySelector('.nav_recette');
+        let part_recette = document.querySelector('.part_recette');
+        let favorite = document.getElementById('favorite');
+
+        function hideAll() {
+            for (let i = 0; i < card.length; i++) {
+                card[i].classList.remove('show');
+                card[i].classList.add('hide');
+                planning.classList.remove('show');
+                planning.classList.add('hide');
+                recette.classList.remove('show');
+                recette.classList.add('hide');
+                liste_de_course.classList.remove('show');
+                liste_de_course.classList.add('hide');
+                nav_recette.classList.remove('show');
+                nav_recette.classList.add('hide');
+                favorite.classList.remove('show');
+                favorite.classList.add('hide');
+                part_recette.classList.remove('show');
+                part_recette.classList.add('hide');
+            }
+        }
 
         for (let i = 0; i < links.length; i++) {
             links[i].addEventListener('click', function() {
                 for (let j = 0; j < card.length; j++) {
+                    hideAll();
                     card[j].classList.remove('show');
                     card[j].classList.add('hide');
                 }
                 if (links[i].hash == "#planning") {
+                    hideAll();
                     planning.classList.remove('hide');
                     planning.classList.add('show');
                 } else if (links[i].hash == "#recette") {
+                    hideAll();
                     recette.classList.remove('hide');
                     recette.classList.add('show');
+                    nav_recette.classList.remove('hide');
+                    nav_recette.classList.add('show');
+                    favorite.classList.remove('hide');
+                    favorite.classList.add('show');
+                    part_recette.classList.remove('hide');
+                    part_recette.classList.add('show');
+
                 } else if (links[i].hash == "#liste-de-course") {
+                    hideAll();
                     liste_de_course.classList.remove('hide');
                     liste_de_course.classList.add('show');
                 }
