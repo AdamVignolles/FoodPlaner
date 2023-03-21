@@ -1,0 +1,45 @@
+cahier des charges
+
+vesrion 1.0
+
+site structuré en plusieurs pages:
+
+-> pade vitrine avec présentation de l'apllication web
+
+    - contient un header avec le logo de l'application web et le nom
+    - contient un menu avec les liens vers les différentes partie de la page
+    - contient un footer avec les liens vers les réseaux sociaux
+    - contient un corps avec les informations sur l'application web fait par des img et des textes
+   
+-> page d'enregistrement/connexion
+
+    - card avec un formulaire d'enregistrement
+    - card avec un formulaire de connexion
+
+-> page gerant l'application web
+    
+    - menu qui affiche les different partie de l'application web
+    - corps qui affiche les different partie de l'application web
+    - gestion hide/show des partie de l'application web
+    - contient la gestion des plats de la semaine avec un planning modifiable
+    - contient la gestion et creation de recette
+    - contient la gestion de creation de la liste de course par selection des recettes
+
+
+-> page utilisateur
+
+    - gestion hide/show des partie composant la gestion du compte utilisateur
+    - nom, email, photo de profil
+    - modification de mot de passe
+    - logout
+    - suppression du compte
+
+
+version 2.0:
+
+-> ajout d'un captcha
+-> ajout de possibilité de generer une recete via l'api de chat gpt
+-> ajout d'une notation des recettes et d'un espaces de discusion
+-> possibilité de choisir l'avatar utilisateur
+-> ajout de critère de selection des recettes
+-> ajout d'une method plat generer aleatoirement
