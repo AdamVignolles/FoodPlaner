@@ -54,11 +54,20 @@
                 <div id="favorite" class="hide">
                     <h3>Mes Favorites</h3>
                     {% for id, recette in recettes_favorites.items %}
-                        <div class="recette_card">
-                            <img src="{{recette.img}}" width="64px">
+                        <div class="recette_card {{id}}">
+                            <div class="content_recette_card">
+                                <img src="{{recette.img}}" width="64px">
                             <h4>{{ recette.nom }}</h4>
                             <p>{{recette.author}}</p>
-                            <img src="{% static 'img/liked.png' %}">
+                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                            <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                            </div>
+                            <div class="info_recette hide">
+                                <p>aaaa</p>
+                                <p>aaaa</p>
+                                <p>aaaa</p>
+                                <p>aaaa</p>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -88,6 +97,8 @@
         let nav_recette = document.querySelector('.nav_recette');
         let part_recette = document.querySelector('.part_recette');
         let favorite = document.getElementById('favorite');
+        let info_recette = document.querySelector('.info_recette');
+
 
         function hideAll() {
             for (let i = 0; i < card.length; i++) {
@@ -105,6 +116,9 @@
                 favorite.classList.add('hide');
                 part_recette.classList.remove('show');
                 part_recette.classList.add('hide');
+                info_recette.classList.remove('show');
+                info_recette.classList.add('hide');
+
             }
         }
 
@@ -137,6 +151,22 @@
                 }
             });
         }
+
+        let fleche = document.querySelector('.fleche');
+        let fleche_click = false;
+        fleche.addEventListener('click', function() {
+            if (fleche_click == false) {
+                info_recette.classList.remove('hide');
+                info_recette.classList.add('show');
+                fleche.style.transform = "rotate(270deg)"
+                fleche_click = true;
+            } else {
+                info_recette.classList.remove('show');
+                info_recette.classList.add('hide');
+                fleche.style.transform = "rotate(180deg)"
+                fleche_click = false;
+            }
+        });
     </script>
 </body>
 </html>

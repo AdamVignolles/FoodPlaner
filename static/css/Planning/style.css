@@ -212,10 +212,39 @@ header img{
   width: 100%;
 }
 .recette_card{
-  display: flex; 
+  display: flex;
+  flex-direction: column;
   border: 1px solid #999;
   border-radius: 10px;
   margin: 10px;
+  padding: 10px;
+  font-style: bold;
+  text-transform: uppercase;
+  text-align: center;
+  align-items: center;
+}
+.content_recette_card{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.recette_card img{
+  padding-right: 15px;
+}
+.recette_card p{
+  padding-right: 30px;
+  padding-left: 30px;
+}
+.fleche{
+  transform: rotate(180deg);
+}
+.fleche:hover{
+  cursor: pointer;
+  transform: translateX(5px) rotate(180deg);
+
+  transition: all 0.5s ease-in-out;
 }
 
 .hide{
