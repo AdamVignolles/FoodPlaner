@@ -57,16 +57,34 @@
                         <div class="recette_card {{id}}">
                             <div class="content_recette_card">
                                 <img src="{{recette.img}}" width="64px">
-                            <h4>{{ recette.nom }}</h4>
-                            <p>{{recette.author}}</p>
-                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
-                            <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                                <h4>{{ recette.nom }}</h4>
+                                <p>{{recette.author}}</p>
+                                <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
                             </div>
                             <div class="info_recette hide">
-                                <p>aaaa</p>
-                                <p>aaaa</p>
-                                <p>aaaa</p>
-                                <p>aaaa</p>
+                                <div class="derouler">
+                                    <p>Derouler:</p>
+                                    <ul>
+                                        {% for derouler in recette.derouler %}
+                                            <li>{{derouler}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    <p>a</p>
+                                    <p>a</p>
+                                </div>
+                                <div class="ingredients">
+                                    <p>Ingredients:</p>
+                                    <!--Select number of person without limit-->
+                                    <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                    <ul>
+                                        {% for ingredient in recette.ingredients %}
+                                            <li>{{ingredient}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    <p>a</p>
+                                    <p>a</p>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
