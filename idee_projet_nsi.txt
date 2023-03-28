@@ -1,4 +1,4 @@
-site de courses, repas de la semaine, plat et recette
+﻿site de courses, repas de la semaine, plat et recette
 
 -> base de donné:
    - liste de courses: ajouté et retiré
@@ -27,3 +27,7 @@ https://dribbble.com/shots/6077106-Diet-Plan -> planing
 check contentetitable parametre
 check menu deroulant
 https://codepen.io/mturley/pen/gOYveOp -> liste de courses
+
+
+
+Site7
