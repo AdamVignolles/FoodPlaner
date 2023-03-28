@@ -25,7 +25,7 @@ def loggin(request):
                 if user["email"] == email or user["username"] == username:
                     return render(request, "FoodPlaner/Loggin/index.html", {"error_sign_up": "Email or username already used"})
             # add the new user
-            users[username] = {"email": email, "password": password, 'loggin': True, "username": username, "avatar": "basic.png"}
+            users[username] = {"email": email, "password": password, 'loggin': True, "username": username, "avatar": "basic.png", "recettes_favorites": {}}
 
             with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                 json.dump(users, file)
