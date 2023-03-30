@@ -222,12 +222,13 @@ header img{
   text-transform: uppercase;
   text-align: center;
   align-items: center;
+  width: 450px;
 }
 .content_recette_card{
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
 }
 .recette_card img{
@@ -250,11 +251,25 @@ header img{
   font-size: 10px;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: black;
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 .ingredients{
   font-size: 10px;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: black;
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.ingredients input{
+  width: 50px;
+  margin-left: 30px;
 }
 
 .hide{

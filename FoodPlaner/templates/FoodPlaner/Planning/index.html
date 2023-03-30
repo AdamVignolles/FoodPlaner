@@ -70,8 +70,7 @@
                                             <li>{{derouler}}</li>
                                         {% endfor %}
                                     </ul>
-                                    <p>a</p>
-                                    <p>a</p>
+                                    
                                 </div>
                                 <div class="ingredients">
                                     <p>Ingredients:</p>
@@ -82,8 +81,7 @@
                                             <li>{{ingredient}}</li>
                                         {% endfor %}
                                     </ul>
-                                    <p>a</p>
-                                    <p>a</p>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -170,21 +168,24 @@
             });
         }
 
-        let fleche = document.querySelector('.fleche');
-        let fleche_click = false;
-        fleche.addEventListener('click', function() {
-            if (fleche_click == false) {
-                info_recette.classList.remove('hide');
-                info_recette.classList.add('show');
-                fleche.style.transform = "rotate(270deg)"
-                fleche_click = true;
-            } else {
-                info_recette.classList.remove('show');
-                info_recette.classList.add('hide');
-                fleche.style.transform = "rotate(180deg)"
-                fleche_click = false;
-            }
-        });
+        let fleches = document.querySelectorAll('.fleche');
+        for (let i = 0; i < fleches.length; i++) {
+            fleches[i].addEventListener('click', function() {
+                /*get the div fleche who was click and active is info_recette*/
+                let info_recette = fleches[i].parentElement.parentElement.querySelector('.info_recette');
+
+                if (info_recette.classList.contains('hide')) {
+                    info_recette.classList.remove('hide');
+                    info_recette.classList.add('show');
+                    fleches[i].style.transform = "rotate(270deg)";
+                } else {
+                    info_recette.classList.remove('show');
+                    info_recette.classList.add('hide');
+                    fleches[i].style.transform = "rotate(180deg)";
+                }
+            });
+        }
+        
     </script>
 </body>
 </html>
