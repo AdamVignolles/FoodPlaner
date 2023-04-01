@@ -1,0 +1,101 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header{
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px;
+}
+h1.title{
+    font-size: 30px;
+    color: #000;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 20px 200px;
+}
+main{
+    background-image: url(../img/logo.png);
+    background-size: cover;
+    background-position: center;
+    height: 1500px;
+    width: 100%;
+}
+
+nav ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 20px;
+    padding-top: 50px;
+}
+nav ul li{
+    padding: 0 20px;
+}
+nav ul li a{
+    text-decoration: none;
+    color: #000;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #000;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+.container .box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    margin: 80px;  
+}
+.container h2{
+    font-size: 30px;
+    color: #000;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 200px;
+}
+.info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    margin: 40px;  
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+.info p{
+    font-size: 20px;
+    color: #000;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    padding: 20px;
+    width: 500px;
+}
