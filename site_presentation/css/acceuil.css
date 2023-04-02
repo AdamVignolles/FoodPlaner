@@ -25,7 +25,7 @@ main{
     background-image: url(../img/logo.png);
     background-size: cover;
     background-position: center;
-    height: 1500px;
+    height: 100%;
     width: 100%;
 }
 
@@ -43,7 +43,7 @@ nav ul li{
 nav ul li a{
     text-decoration: none;
     color: #000;
-    font-size: 20px;
+    font-size: 15px;
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
     background-color: #fff;
@@ -98,4 +98,34 @@ nav ul li a{
     font-weight: 700;
     padding: 20px;
     width: 500px;
+}
+
+footer{
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+footer p{
+    font-size: 20px;
+    color: #000;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    padding: 20px;
+    width: 500px;
+}
+footer a{
+    text-decoration: none;
+    color: #000;
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    background-color: #fff;
+    padding: 10px 20px;
+    text-decoration: underline;
 }
