@@ -47,10 +47,13 @@ header h1{
     padding: 20px 100px;
 }
 /* main */
-
-
-
-
+.Conteneur{ 
+    border:1px solid #000 ;
+    border-radius:10px;
+    text-align: center;
+    padding: 50px;
+    margin-bottom: 25px;
+}
 
 /* Footer */
 footer{

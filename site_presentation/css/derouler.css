@@ -47,10 +47,18 @@ header h1{
     padding: 20px 100px;
 }
 /* main */
+main{
+    display: flex ;
+    align-items: center;
+    justify-content: center;
+    margin:40px ;
+}
+table, caption, th, td {
 
-
-
-
+    border: 2px solid #000;
+    text-align: center;
+    
+    }
 
 /* Footer */
 footer{
