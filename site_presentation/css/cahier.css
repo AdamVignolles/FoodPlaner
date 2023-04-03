@@ -7,6 +7,7 @@
 body{
     background-color: #fff;
 }
+/* header */
 .title{
     display: flex;
     align-items: center;
@@ -14,14 +15,16 @@ body{
     margin: 5px;   
 }
 .title h1{
-    font-size: 2rem;
+    font-size: 30px;
+    font-family: "roboto", sans-serif;
+    font-weight: 700;
     color: #000;
     text-align: center;
     border: 1px solid #000;
     border-radius: 10px;
     padding: 20px 100px;
 }
-
+/* nav */
 nav ul{
     display: flex;
     justify-content: center;
@@ -44,6 +47,8 @@ nav ul li a{
     border-radius: 10px;
     border: 1px solid #000;
 }
+
+/* main */
 .versions{
     display: flex;
     justify-content: center;
@@ -94,6 +99,8 @@ nav ul li a{
     color: #000;
     padding:50px;
 }
+
+/* footer */
 footer{
     background-color: #fff;
     display: flex;
