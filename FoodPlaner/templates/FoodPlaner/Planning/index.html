@@ -42,7 +42,7 @@
         </div>
         <div id="recette" class="hide card">
             <div class="nav_recette hide">
-                <nav>
+                <nav class="menu_recette">
                     <ul>
                         <a href="#favorite">Mes Favoris</a>
                         <a href="#creation">Mes Creation</a>
@@ -87,7 +87,42 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div id="creation" class="hide"></div>
+                <div id="creation" class="hide">
+                    <h3>Mes Creation</h3>
+                    {% for id, recette in recettes_creation.items %}
+                        <div class="recette_card {{id}}">
+                            <div class="content_recette_card">
+                                <img src="{{recette.img}}" width="64px">
+                                <h4>{{ recette.nom }}</h4>
+                                <p>{{recette.author}}</p>
+                                <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                            </div>
+                            <div class="info_recette hide">
+                                <div class="derouler">
+                                    <p>Derouler:</p>
+                                    <ul>
+                                        {% for derouler in recette.derouler %}
+                                            <li>{{derouler}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    
+                                </div>
+                                <div class="ingredients">
+                                    <p>Ingredients:</p>
+                                    <!--Select number of person without limit-->
+                                    <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                    <ul>
+                                        {% for ingredient in recette.ingredients %}
+                                            <li>{{ingredient}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
                 <div id="rechercher_recette" class="hide"></div>
             </div>
         </div>
@@ -113,6 +148,8 @@
         let nav_recette = document.querySelector('.nav_recette');
         let part_recette = document.querySelector('.part_recette');
         let favorite = document.getElementById('favorite');
+        let creation = document.getElementById('creation');
+        let rechercher_recette = document.getElementById('rechercher_recette');
         let info_recette = document.querySelector('.info_recette');
 
 
@@ -120,22 +157,25 @@
             for (let i = 0; i < card.length; i++) {
                 card[i].classList.remove('show');
                 card[i].classList.add('hide');
-                planning.classList.remove('show');
-                planning.classList.add('hide');
-                recette.classList.remove('show');
-                recette.classList.add('hide');
-                liste_de_course.classList.remove('show');
-                liste_de_course.classList.add('hide');
-                nav_recette.classList.remove('show');
-                nav_recette.classList.add('hide');
-                favorite.classList.remove('show');
-                favorite.classList.add('hide');
-                part_recette.classList.remove('show');
-                part_recette.classList.add('hide');
-                info_recette.classList.remove('show');
-                info_recette.classList.add('hide');
-
             }
+            planning.classList.remove('show');
+            planning.classList.add('hide');
+            recette.classList.remove('show');
+            recette.classList.add('hide');
+            liste_de_course.classList.remove('show');
+            liste_de_course.classList.add('hide');
+            nav_recette.classList.remove('show');
+            nav_recette.classList.add('hide');
+            favorite.classList.remove('show');
+            favorite.classList.add('hide');
+            part_recette.classList.remove('show');
+            part_recette.classList.add('hide');
+            info_recette.classList.remove('show');
+            info_recette.classList.add('hide');
+            creation.classList.remove('show');
+            creation.classList.add('hide');
+            rechercher_recette.classList.remove('show');
+            rechercher_recette.classList.add('hide');
         }
 
         for (let i = 0; i < links.length; i++) {
@@ -159,11 +199,46 @@
                     favorite.classList.add('show');
                     part_recette.classList.remove('hide');
                     part_recette.classList.add('show');
-
                 } else if (links[i].hash == "#liste-de-course") {
                     hideAll();
                     liste_de_course.classList.remove('hide');
                     liste_de_course.classList.add('show');
+                }
+            });
+        }
+
+        let recettes_links = document.querySelectorAll('nav.menu_recette ul a');
+        for (let i = 0; i < recettes_links.length; i++) {
+            recettes_links[i].addEventListener('click', function() {
+                console.log(recettes_links[i].hash);
+                
+                if (recettes_links[i].hash == "#favorite") {
+                    hideAll();
+                    console.log(favorite.classList);
+                    favorite.classList.remove('hide');
+                    favorite.classList.add('show');
+                    part_recette.classList.remove('hide');
+                    part_recette.classList.add('show');
+                    nav_recette.classList.remove('hide');
+                    nav_recette.classList.add('show');
+                } else if (recettes_links[i].hash == "#creation") {
+                    hideAll();
+                    console.log(creation.classList);
+                    creation.classList.remove('hide');
+                    creation.classList.add('show');
+                    part_recette.classList.remove('hide');
+                    part_recette.classList.add('show');
+                    nav_recette.classList.remove('hide');
+                    nav_recette.classList.add('show');
+                } else if (recettes_links[i].hash == "#rechercher_recette") {
+                    hideAll();
+                    console.log(rechercher_recette.classList);
+                    rechercher_recette.classList.remove('hide');
+                    rechercher_recette.classList.add('show');
+                    part_recette.classList.remove('hide');
+                    part_recette.classList.add('show');
+                    nav_recette.classList.remove('hide');
+                    nav_recette.classList.add('show');
                 }
             });
         }

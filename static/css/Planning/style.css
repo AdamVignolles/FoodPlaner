@@ -2,12 +2,12 @@ body
 {
   margin: 0;
   padding: 0;
-  
-  /* make it look decent enough */
   color: #fff;
   font-family: "Avenir Next", "Avenir", sans-serif;
 }
 
+
+/* menu */
 #menuToggle
 {
   display: block;
@@ -177,7 +177,7 @@ header img{
 }
 
 
-
+/* recettes favorites */
 .content{
   color: black;
   display: flex;
@@ -272,6 +272,10 @@ header img{
   margin-left: 30px;
 }
 
+/*recettes creations*/
+
+
+
 .hide{
   display: none;
 }
@@ -283,5 +287,31 @@ header img{
   display: flex;
 }
 .info_recette.hide{
+  display: none;
+}
+#creation.show{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid #999;
+  border-radius: 10px;
+  margin: 10px;
+}
+#creation.hide{
+  display: none;
+}
+#favorite.show{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #999;
+  border-radius: 10px;
+  margin: 10px;
+  width: 100%;
+}
+#favorite.hide{
   display: none;
 }
