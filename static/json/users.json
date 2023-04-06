@@ -1,1 +1,61 @@
-{"adam": {"email": "adam.vignolles@gmail.com", "password": "Adam2006", "loggin": true, "username": "adam", "avatar": "basic.png", "recettes_favorites": {"1":{"id":"1", "nom": "pattes carbo", "author":"adam", "img":"meal.png", "derouler":[], "ingredients":[]}, "2":{"id":"2", "nom":"pizza", "author":"adam", "img":"meal.png", "derouler":["appeller une pizzeria", "attendre 30 minutes", "manger la pizza"], "ingredients":["sa depend de la pizza", "sa depend de la pizzeria", "sa depend de vos gout"]}}}}
+{
+    "adam": {
+        "email": "adam.vignolles@gmail.com", 
+        "password": "Adam2006", 
+        "loggin": true, 
+        "username": "adam", 
+        "avatar": "basic.png", 
+        "recettes_favorites": {
+            "1":{
+                "id":"1", 
+                "nom": "pattes carbo", 
+                "author":"adam", 
+                "img":"meal.png", 
+                "derouler":[], 
+                "ingredients":[]
+            },
+            "2":{
+                "id":"2", 
+                "nom":"pizza", 
+                "author":"adam", 
+                "img":"meal.png", 
+                "derouler":[
+                    "appeller une pizzeria", 
+                    "attendre 30 minutes", 
+                    "manger la pizza"
+                ], 
+                "ingredients":[
+                    "sa depend de la pizza", 
+                    "sa depend de la pizzeria", 
+                    "sa depend de vos gout"
+                ]
+            }
+        },
+        "recettes_creation":{
+            "1":{
+                "id":"1", 
+                "nom": "pattes carbo", 
+                "author":"adam", 
+                "img":"meal.png",
+                "derouler":[], 
+                "ingredients":[]
+            },
+            "2":{
+                "id":"2", 
+                "nom":"pizza", 
+                "author":"adam", 
+                "img":"meal.png", 
+                "derouler":[
+                    "appeller une pizzeria", 
+                    "attendre 30 minutes", 
+                    "manger la pizza"
+                ], 
+                "ingredients":[
+                    "sa depend de la pizza", 
+                    "sa depend de la pizzeria", 
+                    "sa depend de vos gout"
+                ]
+            }
+        }
+    }
+}
