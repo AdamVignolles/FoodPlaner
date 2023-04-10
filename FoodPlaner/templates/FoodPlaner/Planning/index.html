@@ -64,7 +64,7 @@
 
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button type="submit" name="supfav" value="{{id}}">
+                                    <button id="fav" type="submit" name="supfav" value="{{id}}">
                                         <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
                                     </button>
                                 </form>
@@ -105,7 +105,24 @@
                                 <img src="{{recette.img}}" width="64px">
                                 <h4>{{ recette.nom }}</h4>
                                 <p>{{recette.author}}</p>
-                                <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+
+                                <!-- affiche image liked if recette.liked = TRue-->
+                                {% if recette.liked == True %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="supfav" value="{{id}}">
+                                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="addfav" value="{{id}}">
+                                            <img src="{% static 'img/like.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
                                 <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
                             </div>
                             <div class="info_recette hide">

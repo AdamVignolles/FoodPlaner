@@ -114,29 +114,43 @@ def planning(request, user=None):
     for user in users:
         if users[user]["username"] == username:
             user = users[user]
-            if request.method == "POST":
-                    if "supfav" in request.POST:
-                        recette = request.POST.get("supfav")
-                        
-                        del user["recettes_favorites"][str(recette)]
-                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                            json.dump(users, file)
 
             path = settings.STATIC_URL + "img/avatar"
-
             img_list = os.listdir(BASE_DIR + path + "/")
             base_image = "http://127.0.0.1:8000/static/img/avatar/" + img_list[1]
             link_image = "http://127.0.0.1:8000/static/img/"
             recettes_favorites = user["recettes_favorites"]
             recettes_creation = user["recettes_creation"] 
+
+            if request.method == "POST":
+                    if "supfav" in request.POST:
+                        recette = request.POST.get("supfav")
+                        
+                        del user["recettes_favorites"][str(recette)]
+                        if recette in user["recettes_creation"]:
+                            recettes_creation[recette]["liked"] = False
+                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
+                            json.dump(users, file)
+                    if "addfav" in request.POST:
+                        recette = request.POST.get("addfav")
+                        user["recettes_favorites"][str(recette)] = user["recettes_creation"][str(recette)]
+
+                        print(user["recettes_favorites"])
+                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
+                            json.dump(users, file)
+
             for recette in recettes_favorites:
-                recettes_favorites[recette]['img'] = link_image + recettes_favorites[recette]["img"]
+                if not "static/img/" in recettes_favorites[recette]["img"]:
+                    recettes_favorites[recette]['img'] = link_image + recettes_favorites[recette]["img"]
             for recette in recettes_creation:
-               recettes_creation[recette]['img'] = link_image + recettes_creation[recette]["img"]
+                if not "static/img/" in recettes_creation[recette]["img"]:
+                    recettes_creation[recette]['img'] = link_image + recettes_creation[recette]["img"]
+
+                if recette in recettes_favorites:recettes_creation[recette]["liked"] = True
+                else:recettes_creation[recette]["liked"] = False
+
             content = {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation}
 
-
-            
             return render(request, "FoodPlaner/Planning/index.html", content)
             
             
