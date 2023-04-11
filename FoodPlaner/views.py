@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.conf import settings
 import json
@@ -25,12 +26,14 @@ def loggin(request):
                 if user["email"] == email or user["username"] == username:
                     return render(request, "FoodPlaner/Loggin/index.html", {"error_sign_up": "Email or username already used"})
             # add the new user
-            users[username] = {"email": email, "password": password, 'loggin': True, "username": username, "avatar": "basic.png", "recettes_favorites": {}}
+            users[username] = {"email": email, "password": password, 'loggin': True, "username": username, "avatar": "basic.png", "recettes_favorites": {}, "recettes_creation":{}}
 
             with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                 json.dump(users, file)
 
-            return planning(request, user=username)
+            response = render(request, "FoodPlaner/Planning/index.html", {"username": username})
+            response.set_cookie("username", user["username"])
+            return redirect("/planning")
         else : 
             if "email" in request.POST.keys() and "pswd" in request.POST.keys():
                 email = str(request.POST["email"])
@@ -44,9 +47,14 @@ def loggin(request):
                     user = users[user]
                     if user["email"] == email and user["password"] == password:
                         user["login"] = True
-                    return planning(request, user=user["username"])
+
+                    response = render(request, "FoodPlaner/Planning/index.html", {"username": user["username"]})
+                    response.set_cookie("username", user["username"])
+                    return redirect("/planning")
                     
-                return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect"})
+
+                return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect", "email": email})
+            
 
     else:
         return render(request, "FoodPlaner/Loggin/index.html")
@@ -102,23 +110,48 @@ def planning(request, user=None):
     with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
         users = json.load(file)
 
-    if user != None and users[user]["loggin"]:
+    username = request.COOKIES['username']
+    for user in users:
+        if users[user]["username"] == username:
+            user = users[user]
 
-        path = settings.STATIC_URL + "img/avatar"
+            path = settings.STATIC_URL + "img/avatar"
+            img_list = os.listdir(BASE_DIR + path + "/")
+            base_image = "http://127.0.0.1:8000/static/img/avatar/" + img_list[1]
+            link_image = "http://127.0.0.1:8000/static/img/"
+            recettes_favorites = user["recettes_favorites"]
+            recettes_creation = user["recettes_creation"] 
 
-        img_list = os.listdir(BASE_DIR + path + "/")
-        base_image = "http://127.0.0.1:8000/static/img/avatar/" + img_list[1]
-        link_image = "http://127.0.0.1:8000/static/img/"
-        recettes_favorites = users[user]["recettes_favorites"]
-        recettes_creation = users[user]["recettes_creation"] 
-        for recette in recettes_favorites:
-            recettes_favorites[recette]['img'] = link_image + recettes_favorites[recette]["img"]
-        for recette in recettes_creation:
-            recettes_creation[recette]['img'] = link_image + recettes_creation[recette]["img"]
-        content = {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation}
-        return render(request, "FoodPlaner/Planning/index.html", content)
-    
-    
-    else:
-        return redirect("/loggin")
-    
+            if request.method == "POST":
+                    if "supfav" in request.POST:
+                        recette = request.POST.get("supfav")
+                        
+                        del user["recettes_favorites"][str(recette)]
+                        if recette in user["recettes_creation"]:
+                            recettes_creation[recette]["liked"] = False
+                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
+                            json.dump(users, file)
+                    if "addfav" in request.POST:
+                        recette = request.POST.get("addfav")
+                        user["recettes_favorites"][str(recette)] = user["recettes_creation"][str(recette)]
+
+                        print(user["recettes_favorites"])
+                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
+                            json.dump(users, file)
+
+            for recette in recettes_favorites:
+                if not "static/img/" in recettes_favorites[recette]["img"]:
+                    recettes_favorites[recette]['img'] = link_image + recettes_favorites[recette]["img"]
+            for recette in recettes_creation:
+                if not "static/img/" in recettes_creation[recette]["img"]:
+                    recettes_creation[recette]['img'] = link_image + recettes_creation[recette]["img"]
+
+                if recette in recettes_favorites:recettes_creation[recette]["liked"] = True
+                else:recettes_creation[recette]["liked"] = False
+
+            content = {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation}
+
+            return render(request, "FoodPlaner/Planning/index.html", content)
+            
+            
+            

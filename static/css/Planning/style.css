@@ -315,3 +315,12 @@ header img{
 #favorite.hide{
   display: none;
 }
+
+button{
+  background-color: #fff;
+  border: none;
+  margin: 10px;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+}
