@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.conf import settings
 import json
 import os
+import flask
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,7 +32,7 @@ def loggin(request):
             with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                 json.dump(users, file)
 
-            response = render(request, "FoodPlaner/Planning/index.html", {"username": username})
+            response = flask.make_response(render(request, "FoodPlaner/Planning/index.html", {"username": username}))
             response.set_cookie("username", user["username"])
             return redirect("/planning")
         else : 
@@ -48,9 +49,13 @@ def loggin(request):
                     if user["email"] == email and user["password"] == password:
                         user["login"] = True
 
-                    response = render(request, "FoodPlaner/Planning/index.html", {"username": user["username"]})
+                    response = redirect("/planning")
                     response.set_cookie("username", user["username"])
-                    return redirect("/planning")
+
+
+                    print(user["username"], response)
+                    
+                    return response
                     
 
                 return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect", "email": email})
