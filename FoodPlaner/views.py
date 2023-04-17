@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.conf import settings
 import json
 import os
-import flask
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -32,9 +32,11 @@ def loggin(request):
             with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                 json.dump(users, file)
 
-            response = flask.make_response(render(request, "FoodPlaner/Planning/index.html", {"username": username}))
+            response = redirect("/planning")
             response.set_cookie("username", user["username"])
-            return redirect("/planning")
+            
+            return response
+                    
         else : 
             if "email" in request.POST.keys() and "pswd" in request.POST.keys():
                 email = str(request.POST["email"])
@@ -51,16 +53,12 @@ def loggin(request):
 
                     response = redirect("/planning")
                     response.set_cookie("username", user["username"])
-
-
-                    print(user["username"], response)
                     
                     return response
                     
 
                 return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect", "email": email})
             
-
     else:
         return render(request, "FoodPlaner/Loggin/index.html")
     
@@ -115,6 +113,9 @@ def planning(request, user=None):
     with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
         users = json.load(file)
 
+    with open(f"{BASE_DIR}\\static\\json\\recettes.json", "r") as file:
+        recettes = json.load(file)
+
     username = request.COOKIES['username']
     for user in users:
         if users[user]["username"] == username:
@@ -144,6 +145,10 @@ def planning(request, user=None):
                         with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                             json.dump(users, file)
 
+            for recette in recettes:
+                if not "static/img/" in recettes[recette]["img"]:
+                    recettes[recette]['img'] = link_image + recettes[recette]["img"]
+
             for recette in recettes_favorites:
                 if not "static/img/" in recettes_favorites[recette]["img"]:
                     recettes_favorites[recette]['img'] = link_image + recettes_favorites[recette]["img"]
@@ -153,8 +158,9 @@ def planning(request, user=None):
 
                 if recette in recettes_favorites:recettes_creation[recette]["liked"] = True
                 else:recettes_creation[recette]["liked"] = False
+            
 
-            content = {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation}
+            content = {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation, "recette_recherche": recettes}
 
             return render(request, "FoodPlaner/Planning/index.html", content)
             

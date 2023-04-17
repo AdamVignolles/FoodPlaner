@@ -150,11 +150,69 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div id="rechercher_recette" class="hide"></div>
+                <div id="rechercher_recette" class="hide">
+                    <h3>Rechercher une Recette</h3>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="search" placeholder="Rechercher une recette">
+                        <button type="submit">Rechercher</button>
+                    </form>
+
+                    {% for id, recette in recette_recherche.items %}
+                        <div class="recette_card {{id}}">
+                            <div class="content_recette_card">
+                                <img src="{{recette.img}}" width="64px">
+                                <h4>{{ recette.nom }}</h4>
+                                <p>{{recette.author}}</p>
+
+                                <!-- affiche image liked if recette.liked = TRue-->
+                                {% if recette.liked == True %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="supfav" value="{{id}}">
+                                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="addfav" value="{{id}}">
+                                            <img src="{% static 'img/like.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
+                                <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                            </div>
+                            <div class="info_recette hide">
+                                <div class="derouler">
+                                    <p>Derouler:</p>
+                                    <ul>
+                                        {% for derouler in recette.derouler %}
+                                            <li>{{derouler}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    
+                                </div>
+                                <div class="ingredients">
+                                    <p>Ingredients:</p>
+                                    <!--Select number of person without limit-->
+                                    <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                    <ul>
+                                        {% for ingredient in recette.ingredients %}
+                                            <li>{{ingredient}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div id="liste-de-course" class="hide card">
-            <h1>Liste de Course</h1>
+            <h1>Liste de course</h1>
         </div>
     </div>
 
