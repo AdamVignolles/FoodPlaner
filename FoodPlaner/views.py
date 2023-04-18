@@ -50,6 +50,8 @@ def loggin(request):
 
                     response = render(request, "FoodPlaner/Planning/index.html", {"username": user["username"]})
                     response.set_cookie("username", user["username"])
+                    print(user['username'])
+                    print(request.COOKIES['username'])
                     return redirect("/planning")
                     
 
@@ -110,6 +112,7 @@ def planning(request, user=None):
     with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
         users = json.load(file)
 
+    print(request.COOKIES)
     username = request.COOKIES['username']
     for user in users:
         if users[user]["username"] == username:
