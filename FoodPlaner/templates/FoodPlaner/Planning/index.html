@@ -19,11 +19,11 @@
                 <span></span>
                 
                 <ul id="menu">
-                    <a href="#planning"><li>Planning</li></a>
-                    <a href="#recette"><li>Recette</li></a>
-                    <a href="#liste-de-course"><li>Liste de Course</li></a>
-                    <a href="/user/"><li>Profile</li></a>
-                    <a href="/user/#logout"><li>Logout</li></a>
+                    <a href="#planning"><li><img src="{% static 'img/planning.png' %}" width="25px">Planning</li></a>
+                    <a href="#recette"><li><img src="{% static 'img/recette.png' %}" width="25px">Recette</li></a>
+                    <a href="#liste-de-course"><li><img src="{% static 'img/list.png' %}" width="25px">Liste de Course</li></a>
+                    <a href="/user/"><li><img src="{% static 'img/avatar/avatar-homme.png' %}" width="25px">Profile</li></a>
+                    <a href="/user/#logout"><li><img src="{% static 'img/exit.png' %}" width="25px">Logout</li></a>
                 </ul>
             </div>
         </nav>
@@ -98,7 +98,12 @@
                     {% endfor %}
                 </div>
                 <div id="creation" class="hide">
-                    <h3>Mes Creation</h3>
+                    <div class="top">
+                        <h3>Mes Creation</h3>
+                        <a id="cree_recette_link" href="#cree_recette"><img src="{% static 'img/new.png' %}"></a>
+                    </div>
+                    
+
                     {% for id, recette in recettes_creation.items %}
                         <div class="recette_card {{id}}">
                             <div class="content_recette_card">
@@ -126,30 +131,69 @@
                                 <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
                             </div>
                             <div class="info_recette hide">
-                                <div class="derouler">
-                                    <p>Derouler:</p>
-                                    <ul>
-                                        {% for derouler in recette.derouler %}
-                                            <li>{{derouler}}</li>
-                                        {% endfor %}
-                                    </ul>
-                                    
+                                <div class="top">
+                                    <div class="derouler">
+                                        <p>Derouler:</p>
+                                        <ul>
+                                            {% for derouler in recette.derouler %}
+                                                <li>{{derouler}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="ingredients">
+                                        <p>Ingredients:</p>
+                                        <!--Select number of person without limit-->
+                                        <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                        <ul>
+                                            {% for ingredient in recette.ingredients %}
+                                                <li>{{ingredient}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
                                 </div>
-                                <div class="ingredients">
-                                    <p>Ingredients:</p>
-                                    <!--Select number of person without limit-->
-                                    <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
-                                    <ul>
-                                        {% for ingredient in recette.ingredients %}
-                                            <li>{{ingredient}}</li>
-                                        {% endfor %}
-                                    </ul>
-                                    
-                                </div>
+                               
+                                <form  method="POST">
+                                    {% csrf_token %}
+                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                        <p>Supprimer</p>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
+
+                <div id="cree_recette" class="hide">
+                    <h3>Cree une Recette</h3>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="top">
+                            <div class="img_part">
+
+                                <label for="imageUpload" class="custom-file-upload">
+                                    <img src="{% static 'img/download_img.png' %}" />
+                                  </label>
+                                  <input name="img" type="file" id="imageUpload" accept="image/*" style="display: none;" />
+
+                            </div>
+                            
+                            <input type="text" name="nom_recette" placeholder="Nom de la recette">
+                            <p>{{ username.username }}</p>
+                        </div>
+                        <div class="midle">
+                            <textarea id="derouler" name="derouler" rows="7" cols="35">derouler de votre recette</textarea>
+                            <textarea id="ingredients" name="ingredients" rows="7" cols="35">vos ingredients</textarea>
+                        </div>
+                        <div class="bottom">
+                            <button type="submit" name="cree_recette">Cree</button>
+                        </div>
+                        
+                        
+                    </form>
+                </div>
+
                 <div id="rechercher_recette" class="hide">
                     <h3>Rechercher une Recette</h3>
                     <form method="POST">
@@ -235,6 +279,7 @@
         let creation = document.getElementById('creation');
         let rechercher_recette = document.getElementById('rechercher_recette');
         let info_recette = document.querySelector('.info_recette');
+        let cree_recette = document.getElementById('cree_recette');
 
 
         function hideAll() {
@@ -260,6 +305,8 @@
             creation.classList.add('hide');
             rechercher_recette.classList.remove('show');
             rechercher_recette.classList.add('hide');
+            cree_recette.classList.remove('show');
+            cree_recette.classList.add('hide');
         }
 
         for (let i = 0; i < links.length; i++) {
@@ -344,6 +391,16 @@
                 }
             });
         }
+
+        let cree_recette_link = document.getElementById('cree_recette_link');
+        cree_recette_link.addEventListener('click', function() {
+            hideAll();
+            part_recette.classList.remove('hide');
+            part_recette.classList.add('show');
+            cree_recette.classList.remove('hide');
+            cree_recette.classList.add('show');
+            console.log(cree_recette.classList);
+        });
     
         
     </script>

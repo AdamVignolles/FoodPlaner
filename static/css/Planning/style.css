@@ -299,7 +299,23 @@ header img{
 
 /*recettes creations*/
 
+.top{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.top h3{
+  color: #000;
+  text-align: center;
+  padding-left: 40%;
 
+}
+.top a{
+  color: #000;
+  text-align: center;
+  cursor: pointer;
+  padding-left: 25%;
+}
 
 .hide{
   display: none;
@@ -308,9 +324,19 @@ header img{
   display: block;
 }
 
+.info_recette .top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .info_recette.show{
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
 .info_recette.hide{
   display: none;
 }
@@ -340,6 +366,76 @@ header img{
 #favorite.hide{
   display: none;
 }
+#favorite .info_recette.show{
+  display: flex;
+  flex-direction: row;
+}
+#favorite .recette_card .info_recette.hide{
+  display: none;
+}
+
+#cree_recette.show{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #999;
+  border-radius: 10px;
+  margin: 10px;
+  width: 100%;
+}
+#cree_recette.hide{
+  display: none;
+}
+
+#cree_recette form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+#cree_recette form .top{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  margin-bottom: 20px;
+}
+#cree_recette form .middle{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+#cree_recette form .bottom{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+#cree_recette form .bottom button{
+  width: 100%;
+  margin: 10px;
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  width: 50px;
+  border-radius: 4px;
+}
+
+.custom-file-upload img {
+  vertical-align: middle;
+  margin-right: 10px;
+  width: 50px;
+}
+
 
 button{
   background-color: #fff;

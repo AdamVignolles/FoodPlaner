@@ -145,6 +145,32 @@ def planning(request, user=None):
                         with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                             json.dump(users, file)
 
+                    if "cree_recette" in request.POST:
+                        nom_recette = request.POST.get("nom_recette")
+                        author = user["username"]
+                        ingredients = request.POST.get("ingredients").split("\r\n")
+                        derouler = request.POST.get("derouler").split("\r\n")
+                        img = request.POST.get("img")
+                        if img == "":
+                            img = "meal.png"
+                        id =str(int(recettes[str(len(recettes))]["id"]) + 1)
+                        recette = {"id": id, "nom": nom_recette, "author": author, "ingredients": ingredients, "derouler": derouler, "img": img}
+                        recettes[id] = recette
+                        recettes_creation[id] = recette
+                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
+                            json.dump(users, file)
+                        with open(f"{BASE_DIR}\\static\\json\\recettes.json", "w") as file:
+                            json.dump(recettes, file)
+                    if "sup_recette" in request.POST:
+                        recette = request.POST.get("sup_recette")
+                        del recettes[recette]
+                        del recettes_creation[recette]
+                        with open(f"{BASE_DIR}\\static\\json\\recettes.json", "w") as file:
+                            json.dump(recettes, file)
+                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
+                            json.dump(users, file)
+
+
             for recette in recettes:
                 if not "static/img/" in recettes[recette]["img"]:
                     recettes[recette]['img'] = link_image + recettes[recette]["img"]
