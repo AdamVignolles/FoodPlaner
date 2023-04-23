@@ -93,6 +93,21 @@
                                     </ul>
                                     
                                 </div>
+                                <div class="add_planning">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <select name="day">
+                                            <option value="lundi">Lundi</option>
+                                            <option value="mardi">Mardi</option>
+                                            <option value="mercredi">Mercredi</option>
+                                            <option value="jeudi">Jeudi</option>
+                                            <option value="vendredi">Vendredi</option>
+                                            <option value="samedi">Samedi</option>
+                                            <option value="dimanche">Dimanche</option>
+                                        </select>
+                                        <button type="submit" name="add_planning" value="{{id}}">Ajouter</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
@@ -152,6 +167,21 @@
                                         </ul>
                                         
                                     </div>
+                                    <div class="add_planning">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <select name="day">
+                                                <option value="lundi">Lundi</option>
+                                                <option value="mardi">Mardi</option>
+                                                <option value="mercredi">Mercredi</option>
+                                                <option value="jeudi">Jeudi</option>
+                                                <option value="vendredi">Vendredi</option>
+                                                <option value="samedi">Samedi</option>
+                                                <option value="dimanche">Dimanche</option>
+                                            </select>
+                                            <button type="submit" name="add_planning" value="{{id}}">Ajouter</button>
+                                        </form>
+                                    </div>
                                 </div>
                                
                                 <form  method="POST">
@@ -167,7 +197,7 @@
 
                 <div id="cree_recette" class="hide">
                     <h3>Cree une Recette</h3>
-                    <form method="POST">
+                    <form method="POST" enctype= "multipart/form-data">
                         {% csrf_token %}
                         <div class="top">
                             <div class="img_part">
@@ -195,14 +225,17 @@
                 </div>
 
                 <div id="rechercher_recette" class="hide">
-                    <h3>Rechercher une Recette</h3>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <input type="text" name="search" placeholder="Rechercher une recette">
-                        <button type="submit">Rechercher</button>
-                    </form>
-
-                    {% for id, recette in recette_recherche.items %}
+                    <div class="top">
+                        <h3>Rechercher une Recette</h3>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="search" placeholder="Rechercher une recette">
+                            <button type="submit" name="search_recette" ><img src="{% static 'img/rechercher.png' %}"></button>
+                        </form>
+                    </div>
+                    
+                    <div class="content">
+                        {% for id, recette in recette_recherche.items %}
                         <div class="recette_card {{id}}">
                             <div class="content_recette_card">
                                 <img src="{{recette.img}}" width="64px">
@@ -249,9 +282,27 @@
                                     </ul>
                                     
                                 </div>
+                                <!--selection day for add id to planning send in form-->
+                                <div class="add_planning">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <select name="day">
+                                            <option value="lundi">Lundi</option>
+                                            <option value="mardi">Mardi</option>
+                                            <option value="mercredi">Mercredi</option>
+                                            <option value="jeudi">Jeudi</option>
+                                            <option value="vendredi">Vendredi</option>
+                                            <option value="samedi">Samedi</option>
+                                            <option value="dimanche">Dimanche</option>
+                                        </select>
+                                        <button type="submit" name="add_planning" value="{{id}}">Ajouter</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
+                    </div>
+                    
                 </div>
             </div>
         </div>

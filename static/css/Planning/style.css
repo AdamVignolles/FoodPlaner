@@ -374,6 +374,15 @@ header img{
   display: none;
 }
 
+#rechercher_recette .info_recette.show{
+  display : flex;
+  flex-direction: row;
+}
+
+#rechercher_recette .info_recette.hide{
+  display: none;
+}
+
 #cree_recette.show{
   display: flex;
   flex-direction: column;
@@ -444,4 +453,65 @@ button{
   text-align: center;
   align-items: center;
   cursor: pointer;
+}
+#rechercher_recette.show{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #999;
+  border-radius: 10px;
+  margin: 10px;
+  width: 100%;
+}
+#rechercher_recette form{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+}
+#rechercher_recette .top{
+  display:flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+#rechercher_recette .top h3{
+  padding-left: 25%;
+}
+
+#rechercher_recette form input{
+  margin: 5px;
+  border: 1px solid #999;
+  border-radius: 10px;
+  width: 200px;
+}
+.add_planning{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  border: 1px solid #999;
+  border-radius: 10px;
+  margin: 20px;
+}
+.add_planning button{
+  margin: 5px;
+  color: #999;
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+.add_planning button:hover{
+  color: #000;
+}
+.add_planning select{
+  margin: 5px;
+  color: #999;
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+.add_planning select:hover{
+  color: #000;
 }
