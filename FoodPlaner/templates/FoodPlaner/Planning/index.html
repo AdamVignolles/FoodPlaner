@@ -19,8 +19,8 @@
                 <span></span>
                 
                 <ul id="menu">
-                    <a href="#planning"><li><img src="{% static 'img/planning.png' %}" width="25px">Planning</li></a>
                     <a href="#recette"><li><img src="{% static 'img/recette.png' %}" width="25px">Recette</li></a>
+                    <a href="#planning"><li><img src="{% static 'img/planning.png' %}" width="25px">Planning</li></a>
                     <a href="#liste-de-course"><li><img src="{% static 'img/list.png' %}" width="25px">Liste de Course</li></a>
                     <a href="/user/"><li><img src="{% static 'img/avatar/avatar-homme.png' %}" width="25px">Profile</li></a>
                     <a href="/user/#logout"><li><img src="{% static 'img/exit.png' %}" width="25px">Logout</li></a>
@@ -37,7 +37,7 @@
     </header>
 
     <div class="content">
-        <div id="planning" class="show card">
+        <div id="planning" class="hide card">
             <h1>Planning</h1>
         </div>
         <div id="recette" class="hide card">
@@ -50,8 +50,8 @@
                     </ul>
                 </nav>
             </div>
-            <div class="part_recette hide">
-                <div id="favorite" class="hide">
+            <div class="part_recette show">
+                <div id="favorite" class="show">
                     <h3>Mes Favorites</h3>
                     {% for id, recette in recettes_favorites.items %}
                         <div class="recette_card {{id}}">
