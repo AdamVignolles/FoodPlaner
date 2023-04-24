@@ -128,6 +128,13 @@ def planning(request, user=None):
             link_image = "http://127.0.0.1:8000/static/img/"
             recettes_favorites = user["recettes_favorites"]
             recettes_creation = user["recettes_creation"]
+            lundi=[]
+            mardi=[]
+            mercredi=[]
+            jeudi=[]
+            vendredi=[]
+            samedi=[]
+            dimanche=[]
 
 
             for recette in recettes:
@@ -148,7 +155,18 @@ def planning(request, user=None):
                 else:recettes_creation[recette]["liked"] = False
             
 
-
+            for jour in user["planning"] : 
+                if user["planning"][jour] != []:
+                    for i in user["planning"][jour]:
+                        if i in recettes:
+                            if jour == "lundi": lundi.append(recettes[i])
+                            elif jour == "mardi": mardi.append(recettes[i])
+                            elif jour == "mercredi": mercredi.append(recettes[i])
+                            elif jour == "jeudi": jeudi.append(recettes[i])
+                            elif jour == "vendredi": vendredi.append(recettes[i])
+                            elif jour == "samedi": samedi.append(recettes[i])
+                            elif jour == "dimanche": dimanche.append(recettes[i])
+                print(lundi)
 
 
 
@@ -235,7 +253,7 @@ def planning(request, user=None):
                     
 
 
-            content = {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation, "recette_recherche": recettes} 
+            content =  {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation, "recette_recherche": recettes, "Lundi":lundi, "Mardi":mardi, "Mercredi":mercredi,"Jeudi":jeudi, "Vendredi":vendredi, "Samedi":samedi, "Dimanche":dimanche} 
             return render(request, "FoodPlaner/Planning/index.html", content)
             
             

@@ -52,13 +52,538 @@
 
             </nav>
             <div class="content">
-                <div id="Lundi"> </div>
-                <div id="Mardi"> </div>
-                <div id="Mercredi"> </div>
-                <div id="Jeudi"> </div>
-                <div id="Vendredi"> </div>
-                <div id="Samedi"> </div>
-                <div id="Dimanche"> </div>
+                <div id="Lundi">
+                    {% for id, recette in Lundi.items %}
+                        <div class="recette_card {{id}}">
+                            <div class="content_recette_card">
+                                <img src="{{recette.img}}" width="64px">
+                                <h4>{{ recette.nom }}</h4>
+                                <p>{{recette.author}}</p>
+
+                                <!-- affiche image liked if recette.liked = TRue-->
+                                {% if recette.liked == True %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="supfav" value="{{id}}">
+                                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="addfav" value="{{id}}">
+                                            <img src="{% static 'img/like.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
+                                <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                            </div>
+                            <div class="info_recette hide">
+                                <div class="top">
+                                    <div class="derouler">
+                                        <p>Derouler:</p>
+                                        <ul>
+                                            {% for derouler in recette.derouler %}
+                                                <li>{{derouler}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="ingredients">
+                                        <p>Ingredients:</p>
+                                        <!--Select number of person without limit-->
+                                        <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                        <ul>
+                                            {% for ingredient in recette.ingredients %}
+                                                <li>{{ingredient}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="add_planning">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <select name="day">
+                                                <option value="lundi">Lundi</option>
+                                                <option value="mardi">Mardi</option>
+                                                <option value="mercredi">Mercredi</option>
+                                                <option value="jeudi">Jeudi</option>
+                                                <option value="vendredi">Vendredi</option>
+                                                <option value="samedi">Samedi</option>
+                                                <option value="dimanche">Dimanche</option>
+                                            </select>
+                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
+                                        </form>
+                                    </div>
+                                </div>
+                               
+                                <form  method="POST">
+                                    {% csrf_token %}
+                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                        <p>Supprimer</p>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %} 
+                </div>
+                <div id="Mardi">
+                    {% for id, recette in Mardi.items %}
+                        <div class="recette_card {{id}}">
+                            <div class="content_recette_card">
+                                <img src="{{recette.img}}" width="64px">
+                                <h4>{{ recette.nom }}</h4>
+                                <p>{{recette.author}}</p>
+
+                                <!-- affiche image liked if recette.liked = TRue-->
+                                {% if recette.liked == True %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="supfav" value="{{id}}">
+                                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="addfav" value="{{id}}">
+                                            <img src="{% static 'img/like.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
+                                <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                            </div>
+                            <div class="info_recette hide">
+                                <div class="top">
+                                    <div class="derouler">
+                                        <p>Derouler:</p>
+                                        <ul>
+                                            {% for derouler in recette.derouler %}
+                                                <li>{{derouler}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="ingredients">
+                                        <p>Ingredients:</p>
+                                        <!--Select number of person without limit-->
+                                        <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                        <ul>
+                                            {% for ingredient in recette.ingredients %}
+                                                <li>{{ingredient}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="add_planning">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <select name="day">
+                                                <option value="lundi">Lundi</option>
+                                                <option value="mardi">Mardi</option>
+                                                <option value="mercredi">Mercredi</option>
+                                                <option value="jeudi">Jeudi</option>
+                                                <option value="vendredi">Vendredi</option>
+                                                <option value="samedi">Samedi</option>
+                                                <option value="dimanche">Dimanche</option>
+                                            </select>
+                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
+                                        </form>
+                                    </div>
+                                </div>
+                               
+                                <form  method="POST">
+                                    {% csrf_token %}
+                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                        <p>Supprimer</p>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                 </div>
+                <div id="Mercredi">
+                    {% for id, recette in Mercredi.items %}
+                        <div class="recette_card {{id}}">
+                            <div class="content_recette_card">
+                                <img src="{{recette.img}}" width="64px">
+                                <h4>{{ recette.nom }}</h4>
+                                <p>{{recette.author}}</p>
+
+                                <!-- affiche image liked if recette.liked = TRue-->
+                                {% if recette.liked == True %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="supfav" value="{{id}}">
+                                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="addfav" value="{{id}}">
+                                            <img src="{% static 'img/like.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
+                                <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                            </div>
+                            <div class="info_recette hide">
+                                <div class="top">
+                                    <div class="derouler">
+                                        <p>Derouler:</p>
+                                        <ul>
+                                            {% for derouler in recette.derouler %}
+                                                <li>{{derouler}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="ingredients">
+                                        <p>Ingredients:</p>
+                                        <!--Select number of person without limit-->
+                                        <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                        <ul>
+                                            {% for ingredient in recette.ingredients %}
+                                                <li>{{ingredient}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="add_planning">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <select name="day">
+                                                <option value="lundi">Lundi</option>
+                                                <option value="mardi">Mardi</option>
+                                                <option value="mercredi">Mercredi</option>
+                                                <option value="jeudi">Jeudi</option>
+                                                <option value="vendredi">Vendredi</option>
+                                                <option value="samedi">Samedi</option>
+                                                <option value="dimanche">Dimanche</option>
+                                            </select>
+                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
+                                        </form>
+                                    </div>
+                                </div>
+                               
+                                <form  method="POST">
+                                    {% csrf_token %}
+                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                        <p>Supprimer</p>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                 </div>
+                <div id="Jeudi"> 
+                    {% for id, recette in Jeudi.items %}
+                        <div class="recette_card {{id}}">
+                            <div class="content_recette_card">
+                                <img src="{{recette.img}}" width="64px">
+                                <h4>{{ recette.nom }}</h4>
+                                <p>{{recette.author}}</p>
+
+                                <!-- affiche image liked if recette.liked = TRue-->
+                                {% if recette.liked == True %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="supfav" value="{{id}}">
+                                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="addfav" value="{{id}}">
+                                            <img src="{% static 'img/like.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
+                                <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                            </div>
+                            <div class="info_recette hide">
+                                <div class="top">
+                                    <div class="derouler">
+                                        <p>Derouler:</p>
+                                        <ul>
+                                            {% for derouler in recette.derouler %}
+                                                <li>{{derouler}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="ingredients">
+                                        <p>Ingredients:</p>
+                                        <!--Select number of person without limit-->
+                                        <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                        <ul>
+                                            {% for ingredient in recette.ingredients %}
+                                                <li>{{ingredient}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="add_planning">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <select name="day">
+                                                <option value="lundi">Lundi</option>
+                                                <option value="mardi">Mardi</option>
+                                                <option value="mercredi">Mercredi</option>
+                                                <option value="jeudi">Jeudi</option>
+                                                <option value="vendredi">Vendredi</option>
+                                                <option value="samedi">Samedi</option>
+                                                <option value="dimanche">Dimanche</option>
+                                            </select>
+                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
+                                        </form>
+                                    </div>
+                                </div>
+                               
+                                <form  method="POST">
+                                    {% csrf_token %}
+                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                        <p>Supprimer</p>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div id="Vendredi"> 
+                    {% for id, recette in Vendredi.items %}
+                        <div class="recette_card {{id}}">
+                            <div class="content_recette_card">
+                                <img src="{{recette.img}}" width="64px">
+                                <h4>{{ recette.nom }}</h4>
+                                <p>{{recette.author}}</p>
+
+                                <!-- affiche image liked if recette.liked = TRue-->
+                                {% if recette.liked == True %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="supfav" value="{{id}}">
+                                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="addfav" value="{{id}}">
+                                            <img src="{% static 'img/like.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
+                                <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                            </div>
+                            <div class="info_recette hide">
+                                <div class="top">
+                                    <div class="derouler">
+                                        <p>Derouler:</p>
+                                        <ul>
+                                            {% for derouler in recette.derouler %}
+                                                <li>{{derouler}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="ingredients">
+                                        <p>Ingredients:</p>
+                                        <!--Select number of person without limit-->
+                                        <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                        <ul>
+                                            {% for ingredient in recette.ingredients %}
+                                                <li>{{ingredient}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="add_planning">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <select name="day">
+                                                <option value="lundi">Lundi</option>
+                                                <option value="mardi">Mardi</option>
+                                                <option value="mercredi">Mercredi</option>
+                                                <option value="jeudi">Jeudi</option>
+                                                <option value="vendredi">Vendredi</option>
+                                                <option value="samedi">Samedi</option>
+                                                <option value="dimanche">Dimanche</option>
+                                            </select>
+                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
+                                        </form>
+                                    </div>
+                                </div>
+                               
+                                <form  method="POST">
+                                    {% csrf_token %}
+                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                        <p>Supprimer</p>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div id="Samedi"> 
+                    {% for id, recette in Samedi.items %}
+                        <div class="recette_card {{id}}">
+                            <div class="content_recette_card">
+                                <img src="{{recette.img}}" width="64px">
+                                <h4>{{ recette.nom }}</h4>
+                                <p>{{recette.author}}</p>
+
+                                <!-- affiche image liked if recette.liked = TRue-->
+                                {% if recette.liked == True %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="supfav" value="{{id}}">
+                                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="addfav" value="{{id}}">
+                                            <img src="{% static 'img/like.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
+                                <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                            </div>
+                            <div class="info_recette hide">
+                                <div class="top">
+                                    <div class="derouler">
+                                        <p>Derouler:</p>
+                                        <ul>
+                                            {% for derouler in recette.derouler %}
+                                                <li>{{derouler}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="ingredients">
+                                        <p>Ingredients:</p>
+                                        <!--Select number of person without limit-->
+                                        <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                        <ul>
+                                            {% for ingredient in recette.ingredients %}
+                                                <li>{{ingredient}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="add_planning">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <select name="day">
+                                                <option value="lundi">Lundi</option>
+                                                <option value="mardi">Mardi</option>
+                                                <option value="mercredi">Mercredi</option>
+                                                <option value="jeudi">Jeudi</option>
+                                                <option value="vendredi">Vendredi</option>
+                                                <option value="samedi">Samedi</option>
+                                                <option value="dimanche">Dimanche</option>
+                                            </select>
+                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
+                                        </form>
+                                    </div>
+                                </div>
+                               
+                                <form  method="POST">
+                                    {% csrf_token %}
+                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                        <p>Supprimer</p>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div id="Dimanche"> 
+                    {% for id, recette in Dimanche.items %}
+                        <div class="recette_card {{id}}">
+                            <div class="content_recette_card">
+                                <img src="{{recette.img}}" width="64px">
+                                <h4>{{ recette.nom }}</h4>
+                                <p>{{recette.author}}</p>
+
+                                <!-- affiche image liked if recette.liked = TRue-->
+                                {% if recette.liked == True %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="supfav" value="{{id}}">
+                                            <img src="{% static 'img/liked.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form  method="POST">
+                                        {% csrf_token %}
+                                        <button id="fav" type="submit" name="addfav" value="{{id}}">
+                                            <img src="{% static 'img/like.png' %}" width="32px" height="32px">
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
+                                <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
+                            </div>
+                            <div class="info_recette hide">
+                                <div class="top">
+                                    <div class="derouler">
+                                        <p>Derouler:</p>
+                                        <ul>
+                                            {% for derouler in recette.derouler %}
+                                                <li>{{derouler}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="ingredients">
+                                        <p>Ingredients:</p>
+                                        <!--Select number of person without limit-->
+                                        <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
+                                        <ul>
+                                            {% for ingredient in recette.ingredients %}
+                                                <li>{{ingredient}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="add_planning">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <select name="day">
+                                                <option value="lundi">Lundi</option>
+                                                <option value="mardi">Mardi</option>
+                                                <option value="mercredi">Mercredi</option>
+                                                <option value="jeudi">Jeudi</option>
+                                                <option value="vendredi">Vendredi</option>
+                                                <option value="samedi">Samedi</option>
+                                                <option value="dimanche">Dimanche</option>
+                                            </select>
+                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
+                                        </form>
+                                    </div>
+                                </div>
+                               
+                                <form  method="POST">
+                                    {% csrf_token %}
+                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                        <p>Supprimer</p>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div id="recette" class="show card">
