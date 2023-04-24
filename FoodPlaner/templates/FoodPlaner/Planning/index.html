@@ -39,6 +39,27 @@
     <div class="content">
         <div id="planning" class="show card">
             <h1>Planning</h1>
+            <nav class="navplanning">
+                <ul>
+                        <a href="#Lundi">Lundi</a>
+                        <a href="#Mardi">Mardi</a>
+                        <a href="#Mercredi">Mercredi</a>
+                        <a href="#Jeudi">Jeudi</a>
+                        <a href="#Vendredi">Vendredi</a>
+                        <a href="#Samedi">Samedi</a>
+                        <a href="#Dimanche">Dimanche</a>
+                </ul>
+
+            </nav>
+            <div class="content">
+                <div id="Lundi"> </div>
+                <div id="Mardi"> </div>
+                <div id="Mercredi"> </div>
+                <div id="Jeudi"> </div>
+                <div id="Vendredi"> </div>
+                <div id="Samedi"> </div>
+                <div id="Dimanche"> </div>
+            </div>
         </div>
         <div id="recette" class="hide card">
             <div class="nav_recette hide">
@@ -331,6 +352,13 @@
         let rechercher_recette = document.getElementById('rechercher_recette');
         let info_recette = document.querySelector('.info_recette');
         let cree_recette = document.getElementById('cree_recette');
+        let Lundi = document.getElementById('Lundi');
+        let Mardi = document.getElementById('Mardi');
+        let Mercredi = document.getElementById('Mercredi');
+        let Jeudi = document.getElementById('Jeudi');
+        let Vendredi = document.getElementById('Vendredi');
+        let Samedi = document.getElementById('Samedi');
+        let Dimanche = document.getElementById('Dimanche');
 
 
         function hideAll() {
@@ -358,6 +386,21 @@
             rechercher_recette.classList.add('hide');
             cree_recette.classList.remove('show');
             cree_recette.classList.add('hide');
+            Lundi.classList.remove('show');
+            Mardi.classList.remove('show');
+            Mercredi.classList.remove('show');
+            Jeudi.classList.remove('show');
+            Vendredi.classList.remove('show');
+            Samedi.classList.remove('show');
+            Dimanche.classList.remove('show');
+            Lundi.classList.add('hide');
+            Mardi.classList.add('hide');
+            Mercredi.classList.add('hide');
+            Jeudi.classList.add('hide');
+            Vendredi.classList.add('hide');
+            Samedi.classList.add('hide');
+            Dimanche.classList.add('hide');
+
         }
 
         for (let i = 0; i < links.length; i++) {
@@ -371,6 +414,8 @@
                     hideAll();
                     planning.classList.remove('hide');
                     planning.classList.add('show');
+                    Lundi.classList.remove("hide");
+                    Lundi.classList.add("show");
                 } else if (links[i].hash == "#recette") {
                     hideAll();
                     recette.classList.remove('hide');
@@ -424,6 +469,50 @@
                 }
             });
         }
+
+        let planninglink = document.querySelectorAll("navplanning ul a") ;
+        for (let i = 0; i < planninglink.length; i++) {
+            planninglink[i].addEventListener("click",function() {
+                if (planninglink[i].hash =="#Lundi"){
+                    hideAll();
+                    Lundi.classList.remove("hide")
+                    Lundi.classList.add("show")
+                }
+                else if (planninglink[i].hash =="#Mardi"){
+                    hideAll();
+                    Mardi.classList.remove("hide")
+                    Mardi.classList.add("show")
+                }
+                else if (planninglink[i].hash =="#Mercredi"){
+                    hideAll();
+                    Mercredi.classList.remove("hide")
+                    Mercredi.classList.add("show")
+                }
+                else if (planninglink[i].hash =="#Jeudi"){
+                    hideAll();
+                    Jeudi.classList.remove("hide")
+                    Jeudi.classList.add("show")
+                }
+                else if (planninglink[i].hash =="#Vendredi"){
+                    hideAll();
+                    Vendredi.classList.remove("hide")
+                    Vendredi.classList.add("show")
+                }
+                else if (planninglink[i].hash =="#Samedi"){
+                    hideAll();
+                    Samedi.classList.remove("hide")
+                    Samedi.classList.add("show")
+                }
+                else if (planninglink[i].hash =="#Dimanche"){
+                    hideAll();
+                    Dimanche.classList.remove("hide")
+                    Dimanche.classList.add("show")
+                }
+
+            });
+        }
+
+
 
         let fleches = document.querySelectorAll('.fleche');
         for (let i = 0; i < fleches.length; i++) {
