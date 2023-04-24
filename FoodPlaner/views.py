@@ -64,20 +64,14 @@ def loggin(request):
     
 def user(request, user=None):
 
+    user = request.COOKIES['username']
+
+    with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
+        users = json.load(file)
+
     if request.method == "POST":
-        if user != None:
-            if request.POST.get("logout") == "logout":
-                with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                    users = json.load(file)
-                users[user]["loggin"] = False
-                with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                    json.dump(users, file)
-                return redirect("/")
-        if "user" in request.POST:
-            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                users = json.load(file)
-            current_user = request.POST.get("user")
-            return render(request, "FoodPlaner/User/index.html", {"username": current_user, "error": False,"email": users[current_user]["email"]})
+               
+        
         if "logout" in request.POST:
             return redirect("/")
         if "change_password" in request.POST:
@@ -105,8 +99,10 @@ def user(request, user=None):
                 return redirect("/")
             else:
                 return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": "The password is incorrect"})
-                
-    return render(request, "FoodPlaner/User/index.html", {"username": user})
+
+    
+
+    return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": False})
 
 def planning(request, user=None):
 
@@ -215,9 +211,27 @@ def planning(request, user=None):
                     if "add_planning" in request.POST:
                         recette = request.POST.get("add_planning")
                         # add key att dict
-                        user["planning"][request.POST.get("day")].add(recette)
+                        user["planning"][request.POST.get("day")].append(recette)
                         with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                             json.dump(users, file)
+
+
+            for recette in recettes:
+                if not "static/img/" in recettes[recette]["img"]:
+                    recettes[recette]['img'] = link_image + recettes[recette]["img"]
+
+                if recette in recettes_favorites:recettes[recette]["liked"] = True
+                else:recettes[recette]["liked"] = False
+
+            for recette in recettes_favorites:
+                if not "static/img/" in recettes_favorites[recette]["img"]:
+                    recettes_favorites[recette]['img'] = link_image + recettes_favorites[recette]["img"]
+            for recette in recettes_creation:
+                if not "static/img/" in recettes_creation[recette]["img"]:
+                    recettes_creation[recette]['img'] = link_image + recettes_creation[recette]["img"]
+
+                if recette in recettes_favorites:recettes_creation[recette]["liked"] = True
+                else:recettes_creation[recette]["liked"] = False
                     
 
 

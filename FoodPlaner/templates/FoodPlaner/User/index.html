@@ -97,22 +97,6 @@
         });
 
 
-        window.onload = (event) => {
-            let username = localStorage.getItem('username');
-
-            // submit form
-            if (document.getElementById("username").value != username) {
-                document.getElementById("username").value = username;
-                document.getElementsByName("change_password").value = username;
-                document.user_form.submit();
-            }
-            
-        };
-
-        function logout_user() {
-            localStorage.removeItem('username');
-        };
-
     </script>
 
 
