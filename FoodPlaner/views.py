@@ -51,10 +51,10 @@ def loggin(request):
                     if user["email"] == email and user["password"] == password:
                         user["login"] = True
 
-                    response = redirect("/planning")
-                    response.set_cookie("username", user["username"])
+                        response = redirect("/planning")
+                        response.set_cookie("username", user["username"])
                     
-                    return response
+                        return response
                     
 
                 return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect", "email": email})
