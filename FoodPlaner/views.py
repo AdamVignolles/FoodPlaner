@@ -181,7 +181,7 @@ def planning(request, user=None):
                             json.dump(users, file)
                     if "addfav" in request.POST:
                         recette = request.POST.get("addfav")
-                        user["recettes_favorites"][str(recette)] = user["recettes_creation"][str(recette)]
+                        user["recettes_favorites"][str(recette)] = user[recettes][str(recette)]
 
                         print(user["recettes_favorites"])
                         with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
