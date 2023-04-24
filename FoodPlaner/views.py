@@ -29,7 +29,7 @@ def loggin(request):
                 if user["email"] == email or user["username"] == username:
                     return render(request, "FoodPlaner/Loggin/index.html", {"error_sign_up": "Email or username already used"})
             # add the new user
-            users[username] = {"email": email, "password": password, 'loggin': True, "username": username, "avatar": "basic.png", "planning":{"lundi":"", "mardi":"", "mercredi":"", "jeudi":"", "vendredi":"", "samedi":"", "dimanche":""},"recettes_favorites": {}, "recettes_creation":{}}
+            users[username] = {"email": email, "password": password, 'loggin': True, "username": username, "avatar": "basic.png", "planning": {"lundi": [], "mardi": [], "mercredi": [], "jeudi": [], "vendredi": [], "samedi": [], "dimanche": []},"recettes_favorites": {}, "recettes_creation":{}}
 
             with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                 json.dump(users, file)
@@ -216,7 +216,8 @@ def planning(request, user=None):
                                 recettes[recette] = recettes_creation[recette]
                     if "add_planning" in request.POST:
                         recette = request.POST.get("add_planning")
-                        user["planning"][request.POST.get("day")] = recette
+                        # add key att dict
+                        user["planning"][request.POST.get("day")].add(recette)
                         with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                             json.dump(users, file)
                     
