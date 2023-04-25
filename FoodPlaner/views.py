@@ -1,9 +1,9 @@
 from django.shortcuts import redirect, render
 from django.conf import settings
-import json
 import os
 import FoodPlaner.manage_user as mu
 import FoodPlaner.manage_loggin as ml
+import FoodPlaner.manage_recette as mr
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -82,148 +82,95 @@ def user(request, user=None):
 
 def planning(request, user=None):
 
-    with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-        users = json.load(file)
-
-    with open(f"{BASE_DIR}\\static\\json\\recettes.json", "r") as file:
-        recettes = json.load(file)
-
     username = request.COOKIES['username']
 
+    user_file = f"{BASE_DIR}\\static\\json\\users.json"
+    users = mu.open_json(user_file)
 
+    recettes_file = f"{BASE_DIR}\\static\\json\\recettes.json"
+    recettes = mr.open_json(recettes_file)
+
+    user = users[username]
+    
+    # gestion des path vers les images
+    path = "http://" + settings.ALLOWED_HOSTS[0] + ":8000" 
+    path_static = settings.STATIC_URL + "img/avatar/"
+    img_list = os.listdir(BASE_DIR + path_static + "/")
+    base_image = path + "/static/img/avatar/" + img_list[1]
+    link_image = path + "/static/img/"
+
+    recettes_favorites = user["recettes_favorites"]
+    recettes_creation = user["recettes_creation"]
+
+    mr.retirer_path_img(recettes, recettes_favorites, recettes_creation)
+    mr.get_relative_img(recettes, recettes_favorites, recettes_creation, link_image)
     
 
+    lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche = {}, {}, {}, {}, {}, {}, {}
 
-    for user in users:
-        if users[user]["username"] == username:
-            user = users[user]
+    for jour in user["planning"] : 
+        if user["planning"][jour] != []:
+            for i in user["planning"][jour]:
+                if i in recettes:
+                    if jour == "lundi": lundi[i] = recettes[i]
+                    elif jour == "mardi": mardi[i] = recettes[i]
+                    elif jour == "mercredi": mercredi[i] = recettes[i]
+                    elif jour == "jeudi": jeudi[i] = recettes[i]
+                    elif jour == "vendredi": vendredi[i] = recettes[i]
+                    elif jour == "samedi": samedi[i] = recettes[i]
+                    elif jour == "dimanche": dimanche[i] = recettes[i]
 
-            path = settings.STATIC_URL + "img/avatar"
-            img_list = os.listdir(BASE_DIR + path + "/")
-            base_image = "http://127.0.0.1:8000/static/img/avatar/" + img_list[1]
-            link_image = "http://127.0.0.1:8000/static/img/"
-            recettes_favorites = user["recettes_favorites"]
-            recettes_creation = user["recettes_creation"]
-
-            lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche = {}, {}, {}, {}, {}, {}, {}
-
-
-            for recette in recettes:
-                if not "static/img/" in recettes[recette]["img"]:
-                    recettes[recette]['img'] = link_image + recettes[recette]["img"]
-
-                if recette in recettes_favorites:recettes[recette]["liked"] = True
-                else:recettes[recette]["liked"] = False
-
-            for recette in recettes_favorites:
-                if not "static/img/" in recettes_favorites[recette]["img"]:
-                    recettes_favorites[recette]['img'] = link_image + recettes_favorites[recette]["img"]
-            for recette in recettes_creation:
-                if not "static/img/" in recettes_creation[recette]["img"]:
-                    recettes_creation[recette]['img'] = link_image + recettes_creation[recette]["img"]
-
-                if recette in recettes_favorites:recettes_creation[recette]["liked"] = True
-                else:recettes_creation[recette]["liked"] = False
+    if request.method == "POST":
             
+            if "supfav" in request.POST:
+                recette = request.POST.get("supfav")
+                mr.sup_fav(username, recette, users, user_file)
 
-            for jour in user["planning"] : 
-                if user["planning"][jour] != []:
-                    for i in user["planning"][jour]:
-                        if i in recettes:
-                            if jour == "lundi": lundi[i] = recettes[i]
-                            elif jour == "mardi": mardi[i] = recettes[i]
-                            elif jour == "mercredi": mercredi[i] = recettes[i]
-                            elif jour == "jeudi": jeudi[i] = recettes[i]
-                            elif jour == "vendredi": vendredi[i] = recettes[i]
-                            elif jour == "samedi": samedi[i] = recettes[i]
-                            elif jour == "dimanche": dimanche[i] = recettes[i]
+            if "addfav" in request.POST:
+                recette = request.POST.get("addfav")
+                mr.add_fav(username, recette, recettes, users, user_file)
 
+            if "cree_recette" in request.POST:
+                nom_recette = request.POST.get("nom_recette")
+                author = user["username"]
+                ingredients = request.POST.get("ingredients").split("\r\n")
+                derouler = request.POST.get("derouler").split("\r\n")
+                img = request.POST.get("img")
 
+                # download image
+                if img != "":
+                    image_file = request.FILES.get("img")
+                    with open(f'{BASE_DIR}\\static\\img', 'w') as destination:
+                        for chunk in image_file.chunks():
+                            destination.write(chunk)
+                    img = image_file.name
 
-            if request.method == "POST":
-                    if "supfav" in request.POST:
-                        recette = request.POST.get("supfav")
-                        
-                        del user["recettes_favorites"][str(recette)]
-                        if recette in user["recettes_creation"]:
-                            recettes_creation[recette]["liked"] = False
-                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                            json.dump(users, file)
-                    if "addfav" in request.POST:
-                        recette = request.POST.get("addfav")
-                        user["recettes_favorites"][str(recette)] = recettes[str(recette)]
+                else:
+                    img = "meal.png"
 
-                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                            json.dump(users, file)
+                mr.cree_recette(nom_recette, author, ingredients, derouler, img, user_file, recettes_file)
 
-                    if "cree_recette" in request.POST:
-                        nom_recette = request.POST.get("nom_recette")
-                        author = user["username"]
-                        ingredients = request.POST.get("ingredients").split("\r\n")
-                        derouler = request.POST.get("derouler").split("\r\n")
-                        img = request.POST.get("img")
+            if "sup_recette" in request.POST:
+                recette = request.POST.get("sup_recette")
+                mr.sup_recette(username, recette, user_file, recettes_file)
 
-                        # download image
-                        if img != "":
-                            image_file = request.FILES.get("img")
-                            with open(f'{BASE_DIR}\\static\\img', 'w') as destination:
-                                for chunk in image_file.chunks():
-                                    destination.write(chunk)
-                            img = image_file.name
+            if "search_recette" in request.POST:
+                search = request.POST.get("search")
+                recettes = {}
+                for recette in recettes_creation:
+                    if search.lower() in recettes_creation[recette]["nom"].lower() or search.lower() in recettes_creation[recette]["author"].lower():
+                        recettes[recette] = recettes_creation[recette]
 
-                        else:
-                            img = "meal.png"
-                        id =str(int(recettes[str(len(recettes))]["id"]) + 1)
-                        recette = {"id": id, "nom": nom_recette, "author": author, "ingredients": ingredients, "derouler": derouler, "img": img}
-                        recettes[id] = recette
-                        recettes_creation[id] = recette
-                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                            json.dump(users, file)
-                        with open(f"{BASE_DIR}\\static\\json\\recettes.json", "w") as file:
-                            json.dump(recettes, file)
-                    if "sup_recette" in request.POST:
-                        recette = request.POST.get("sup_recette")
-                        del recettes[recette]
-                        del recettes_creation[recette]
-                        with open(f"{BASE_DIR}\\static\\json\\recettes.json", "w") as file:
-                            json.dump(recettes, file)
-                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                            json.dump(users, file)
-                    if "search_recette" in request.POST:
-                        search = request.POST.get("search")
-                        recettes = {}
-                        for recette in recettes_creation:
-                            if search.lower() in recettes_creation[recette]["nom"].lower() or search.lower() in recettes_creation[recette]["author"].lower():
-                                recettes[recette] = recettes_creation[recette]
-                    if "add_planning" in request.POST:
-                        recette = request.POST.get("add_planning")
-                        # add key att dict
-                        user["planning"][request.POST.get("day")].append(recette)
-                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                            json.dump(users, file)
+            if "add_planning" in request.POST:
+                recette = request.POST.get("add_planning")
+                jour = request.POST.get("jour")
+                mr.add_planning(recette, jour, username, user_file, recettes_file)
 
 
-            for recette in recettes:
-                if not "static/img/" in recettes[recette]["img"]:
-                    recettes[recette]['img'] = link_image + recettes[recette]["img"]
-
-                if recette in recettes_favorites:recettes[recette]["liked"] = True
-                else:recettes[recette]["liked"] = False
-
-            for recette in recettes_favorites:
-                if not "static/img/" in recettes_favorites[recette]["img"]:
-                    recettes_favorites[recette]['img'] = link_image + recettes_favorites[recette]["img"]
-            for recette in recettes_creation:
-                if not "static/img/" in recettes_creation[recette]["img"]:
-                    recettes_creation[recette]['img'] = link_image + recettes_creation[recette]["img"]
-
-                if recette in recettes_favorites:recettes_creation[recette]["liked"] = True
-                else:recettes_creation[recette]["liked"] = False
-                    
-
-
-            content =  {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation, "recette_recherche": recettes, "Lundi":lundi, "Mardi":mardi, "Mercredi":mercredi,"Jeudi":jeudi, "Vendredi":vendredi, "Samedi":samedi, "Dimanche":dimanche} 
-            return render(request, "FoodPlaner/Planning/index.html", content)
+    mr.get_relative_img(recettes, recettes_favorites, recettes_creation, link_image)
             
-            
-            
+    content =  {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation, "recette_recherche": recettes, "Lundi":lundi, "Mardi":mardi, "Mercredi":mercredi,"Jeudi":jeudi, "Vendredi":vendredi, "Samedi":samedi, "Dimanche":dimanche} 
+    return render(request, "FoodPlaner/Planning/index.html", content)
+    
+    
+    
