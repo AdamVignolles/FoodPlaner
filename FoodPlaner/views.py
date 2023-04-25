@@ -1,8 +1,9 @@
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.conf import settings
 import json
 import os
+import FoodPlaner.manage_user as mu
+import FoodPlaner.manage_loggin as ml
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,51 +14,35 @@ def acceuil(request):
 def loggin(request):
     if request.method == "POST":
 
+        user_file = f"{BASE_DIR}\\static\\json\\users.json"
+
         if "txt" in request.POST.keys():
-            username = str(request.POST["txt"])
-            email = str(request.POST["email"])
-            password = str(request.POST["pswd"])
-
-            # create a new account in json file
-            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                users = json.load(file)
-            # check email and username are not already used
-            for user in users:
-                user = users[user]
-                if user["email"] == email or user["username"] == username:
-                    return render(request, "FoodPlaner/Loggin/index.html", {"error_sign_up": "Email or username already used"})
-            # add the new user
-            users[username] = {"email": email, "password": password, 'loggin': True, "username": username, "avatar": "basic.png", "planning": {"lundi": [], "mardi": [], "mercredi": [], "jeudi": [], "vendredi": [], "samedi": [], "dimanche": []},"recettes_favorites": {}, "recettes_creation":{}}
-
-            with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                json.dump(users, file)
-
-            response = redirect("/planning")
-            response.set_cookie("username", user["username"])
             
-            return response
-                    
+            reponse = ml.create_sign_up(request, user_file)
+
+            if reponse[0] == True:
+
+                response = redirect("/planning")
+                response.set_cookie("username", reponse[1])
+                return response
+        
+            else:
+                return render(request, "FoodPlaner/Loggin/index.html", {"error_sign_up": reponse[1]})
+             
         else : 
             if "email" in request.POST.keys() and "pswd" in request.POST.keys():
-                email = str(request.POST["email"])
-                password = str(request.POST["pswd"])
+                
+                reponse = ml.login_user(request, user_file)
 
-                # check if the email and password are correct
-                with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                    users = json.load(file)
+                if reponse[0] == True:
 
-                for user in users:
-                    user = users[user]
-                    if user["email"] == email and user["password"] == password:
-                        user["login"] = True
+                    response = redirect("/planning")
+                    response.set_cookie("username", reponse[1])
+                    return response
 
-                        response = redirect("/planning")
-                        response.set_cookie("username", user["username"])
-                    
-                        return response
-                    
+                else:
 
-                return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect", "email": email})
+                    return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": reponse[1]})
             
     else:
         return render(request, "FoodPlaner/Loggin/index.html")
@@ -65,40 +50,31 @@ def loggin(request):
 def user(request, user=None):
 
     user = request.COOKIES['username']
-
-    with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-        users = json.load(file)
+    user_file = f"{BASE_DIR}\\static\\json\\users.json"
+    users = mu.open_json(user_file)
 
     if request.method == "POST":
-               
         
         if "logout" in request.POST:
+
+            mu.logout_user(request)
             return redirect("/")
+        
         if "change_password" in request.POST:
-            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                users = json.load(file)
-            user = request.POST.get("change_password").split(" ")[1]
-            if request.POST.get("old_password") == users[user]["password"]:
-                if request.POST.get("new_password") != request.POST.get("new_password2"):
-                    return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": "The new password is not the same"})
-                else:
-                    users[user]["password"] = request.POST.get("new_password")
-                    with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                        json.dump(users, file)
+
+            reponse = mu.change_password(request, user, users, user_file)
+            if reponse == True:
                 return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": False, "password_changed": True})
             else:
-                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": "The old password is incorrect"})
+                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": reponse})
+            
         if "delete_account" in request.POST:
-            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                users = json.load(file)
-            user = request.POST.get("delete_account")
-            if request.POST.get("password") == users[user]["password"]:
-                del users[user]
-                with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                    json.dump(users, file)
+            
+            reponse = mu.delete_account(request, user, users, user_file)
+            if reponse == True:
                 return redirect("/")
             else:
-                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": "The password is incorrect"})
+                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": reponse})
 
     
 
@@ -128,13 +104,8 @@ def planning(request, user=None):
             link_image = "http://127.0.0.1:8000/static/img/"
             recettes_favorites = user["recettes_favorites"]
             recettes_creation = user["recettes_creation"]
-            lundi=[]
-            mardi=[]
-            mercredi=[]
-            jeudi=[]
-            vendredi=[]
-            samedi=[]
-            dimanche=[]
+
+            lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche = {}, {}, {}, {}, {}, {}, {}
 
 
             for recette in recettes:
@@ -159,14 +130,13 @@ def planning(request, user=None):
                 if user["planning"][jour] != []:
                     for i in user["planning"][jour]:
                         if i in recettes:
-                            if jour == "lundi": lundi.append(recettes[i])
-                            elif jour == "mardi": mardi.append(recettes[i])
-                            elif jour == "mercredi": mercredi.append(recettes[i])
-                            elif jour == "jeudi": jeudi.append(recettes[i])
-                            elif jour == "vendredi": vendredi.append(recettes[i])
-                            elif jour == "samedi": samedi.append(recettes[i])
-                            elif jour == "dimanche": dimanche.append(recettes[i])
-                print(lundi)
+                            if jour == "lundi": lundi[i] = recettes[i]
+                            elif jour == "mardi": mardi[i] = recettes[i]
+                            elif jour == "mercredi": mercredi[i] = recettes[i]
+                            elif jour == "jeudi": jeudi[i] = recettes[i]
+                            elif jour == "vendredi": vendredi[i] = recettes[i]
+                            elif jour == "samedi": samedi[i] = recettes[i]
+                            elif jour == "dimanche": dimanche[i] = recettes[i]
 
 
 
@@ -183,7 +153,6 @@ def planning(request, user=None):
                         recette = request.POST.get("addfav")
                         user["recettes_favorites"][str(recette)] = recettes[str(recette)]
 
-                        print(user["recettes_favorites"])
                         with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
                             json.dump(users, file)
 

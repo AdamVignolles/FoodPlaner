@@ -30,7 +30,6 @@
         <a href="/">
             <h1>FoodPlaner</h1>
         </a>
-        {{base_image}}
         <a href="/user" class="user_image">
             <img src="{{base_image}}" with="64px" height="64px" alt="{{base_image}}">
         </a>
@@ -101,26 +100,11 @@
                                         </ul>
                                         
                                     </div>
-                                    <div class="add_planning">
-                                        <form method="POST">
-                                            {% csrf_token %}
-                                            <select name="day">
-                                                <option value="lundi">Lundi</option>
-                                                <option value="mardi">Mardi</option>
-                                                <option value="mercredi">Mercredi</option>
-                                                <option value="jeudi">Jeudi</option>
-                                                <option value="vendredi">Vendredi</option>
-                                                <option value="samedi">Samedi</option>
-                                                <option value="dimanche">Dimanche</option>
-                                            </select>
-                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
-                                        </form>
-                                    </div>
                                 </div>
                                
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
@@ -177,33 +161,18 @@
                                         </ul>
                                         
                                     </div>
-                                    <div class="add_planning">
-                                        <form method="POST">
-                                            {% csrf_token %}
-                                            <select name="day">
-                                                <option value="lundi">Lundi</option>
-                                                <option value="mardi">Mardi</option>
-                                                <option value="mercredi">Mercredi</option>
-                                                <option value="jeudi">Jeudi</option>
-                                                <option value="vendredi">Vendredi</option>
-                                                <option value="samedi">Samedi</option>
-                                                <option value="dimanche">Dimanche</option>
-                                            </select>
-                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
-                                        </form>
-                                    </div>
+
                                 </div>
-                               
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
                             </div>
                         </div>
                     {% endfor %}
-                 </div>
+                </div>
                 <div id="Mercredi">
                     {% for id, recette in Mercredi.items %}
                         <div class="recette_card {{id}}">
@@ -253,33 +222,18 @@
                                         </ul>
                                         
                                     </div>
-                                    <div class="add_planning">
-                                        <form method="POST">
-                                            {% csrf_token %}
-                                            <select name="day">
-                                                <option value="lundi">Lundi</option>
-                                                <option value="mardi">Mardi</option>
-                                                <option value="mercredi">Mercredi</option>
-                                                <option value="jeudi">Jeudi</option>
-                                                <option value="vendredi">Vendredi</option>
-                                                <option value="samedi">Samedi</option>
-                                                <option value="dimanche">Dimanche</option>
-                                            </select>
-                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
-                                        </form>
-                                    </div>
                                 </div>
-                               
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
                             </div>
                         </div>
                     {% endfor %}
-                 </div>
+                    </div>
+                </div>
                 <div id="Jeudi"> 
                     {% for id, recette in Jeudi.items %}
                         <div class="recette_card {{id}}">
@@ -329,29 +283,14 @@
                                         </ul>
                                         
                                     </div>
-                                    <div class="add_planning">
-                                        <form method="POST">
-                                            {% csrf_token %}
-                                            <select name="day">
-                                                <option value="lundi">Lundi</option>
-                                                <option value="mardi">Mardi</option>
-                                                <option value="mercredi">Mercredi</option>
-                                                <option value="jeudi">Jeudi</option>
-                                                <option value="vendredi">Vendredi</option>
-                                                <option value="samedi">Samedi</option>
-                                                <option value="dimanche">Dimanche</option>
-                                            </select>
-                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
-                                        </form>
-                                    </div>
                                 </div>
-                               
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
+                                
                             </div>
                         </div>
                     {% endfor %}
@@ -405,29 +344,14 @@
                                         </ul>
                                         
                                     </div>
-                                    <div class="add_planning">
-                                        <form method="POST">
-                                            {% csrf_token %}
-                                            <select name="day">
-                                                <option value="lundi">Lundi</option>
-                                                <option value="mardi">Mardi</option>
-                                                <option value="mercredi">Mercredi</option>
-                                                <option value="jeudi">Jeudi</option>
-                                                <option value="vendredi">Vendredi</option>
-                                                <option value="samedi">Samedi</option>
-                                                <option value="dimanche">Dimanche</option>
-                                            </select>
-                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
-                                        </form>
-                                    </div>
                                 </div>
-                               
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
+                                
                             </div>
                         </div>
                     {% endfor %}
@@ -481,26 +405,10 @@
                                         </ul>
                                         
                                     </div>
-                                    <div class="add_planning">
-                                        <form method="POST">
-                                            {% csrf_token %}
-                                            <select name="day">
-                                                <option value="lundi">Lundi</option>
-                                                <option value="mardi">Mardi</option>
-                                                <option value="mercredi">Mercredi</option>
-                                                <option value="jeudi">Jeudi</option>
-                                                <option value="vendredi">Vendredi</option>
-                                                <option value="samedi">Samedi</option>
-                                                <option value="dimanche">Dimanche</option>
-                                            </select>
-                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
-                                        </form>
-                                    </div>
                                 </div>
-                               
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
@@ -557,32 +465,18 @@
                                         </ul>
                                         
                                     </div>
-                                    <div class="add_planning">
-                                        <form method="POST">
-                                            {% csrf_token %}
-                                            <select name="day">
-                                                <option value="lundi">Lundi</option>
-                                                <option value="mardi">Mardi</option>
-                                                <option value="mercredi">Mercredi</option>
-                                                <option value="jeudi">Jeudi</option>
-                                                <option value="vendredi">Vendredi</option>
-                                                <option value="samedi">Samedi</option>
-                                                <option value="dimanche">Dimanche</option>
-                                            </select>
-                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
-                                        </form>
-                                    </div>
                                 </div>
-                               
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
+                            
                             </div>
                         </div>
                     {% endfor %}
+                    
                 </div>
             </div>
         </div>
@@ -750,8 +644,8 @@
 
                                 <label for="imageUpload" class="custom-file-upload">
                                     <img src="{% static 'img/download_img.png' %}" />
-                                  </label>
-                                  <input name="img" type="file" id="imageUpload" accept="image/*" style="display: none;" />
+                                </label>
+                                <input name="img" type="file" id="imageUpload" accept="image/*" style="display: none;" />
 
                             </div>
                             
@@ -782,8 +676,8 @@
                     
                     <div class="content">
                         {% for id, recette in recette_recherche.items %}
-                        <div class="recette_card {{id}}">
-                            <div class="content_recette_card">
+                            <div class="recette_card {{id}}">
+                                <div class="content_recette_card">
                                 <img src="{{recette.img}}" width="64px">
                                 <h4>{{ recette.nom }}</h4>
                                 <p>{{recette.author}}</p>
@@ -806,9 +700,9 @@
                                 {% endif %}
                                 
                                 <img class="fleche" src="{% static 'img/fleche.png' %}" width="32px" height="32px">
-                            </div>
-                            <div class="info_recette hide">
-                                <div class="derouler">
+                                </div>
+                                <div class="info_recette hide">
+                                    <div class="derouler">
                                     <p>Derouler:</p>
                                     <ul>
                                         {% for derouler in recette.derouler %}
@@ -816,8 +710,8 @@
                                         {% endfor %}
                                     </ul>
                                     
-                                </div>
-                                <div class="ingredients">
+                                    </div>
+                                    <div class="ingredients">
                                     <p>Ingredients:</p>
                                     <!--Select number of person without limit-->
                                     <input type="number" pattern="[0-9]*" inputmode="numeric" placeholder="n° person">
@@ -827,28 +721,27 @@
                                         {% endfor %}
                                     </ul>
                                     
-                                </div>
-                                <!--selection day for add id to planning send in form-->
-                                <div class="add_planning">
-                                    <form method="POST">
-                                        {% csrf_token %}
-                                        <select name="day">
-                                            <option value="lundi">Lundi</option>
-                                            <option value="mardi">Mardi</option>
-                                            <option value="mercredi">Mercredi</option>
-                                            <option value="jeudi">Jeudi</option>
-                                            <option value="vendredi">Vendredi</option>
-                                            <option value="samedi">Samedi</option>
-                                            <option value="dimanche">Dimanche</option>
-                                        </select>
-                                        <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
-                                    </form>
+                                    </div>
+                                    <!--selection day for add id to planning send in form-->
+                                    <div class="add_planning">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <select name="day">
+                                                <option value="lundi">Lundi</option>
+                                                <option value="mardi">Mardi</option>
+                                                <option value="mercredi">Mercredi</option>
+                                                <option value="jeudi">Jeudi</option>
+                                                <option value="vendredi">Vendredi</option>
+                                                <option value="samedi">Samedi</option>
+                                                <option value="dimanche">Dimanche</option>
+                                            </select>
+                                            <button type="submit" name="add_planning" value="{{id}}"><img src="{% static 'img/add_planning.png' %}"></button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                    </div>
-                    
+                        {% endfor %}
+                    </div>   
                 </div>
             </div>
         </div>
@@ -995,41 +888,55 @@
             });
         }
 
-        let planninglink = document.querySelectorAll("navplanning ul a") ;
+        let planninglink = document.querySelectorAll(".navplanning ul a") ;
         for (let i = 0; i < planninglink.length; i++) {
             planninglink[i].addEventListener("click",function() {
                 if (planninglink[i].hash =="#Lundi"){
                     hideAll();
+                    planning.classList.remove('hide');
+                    planning.classList.add('show');
                     Lundi.classList.remove("hide")
                     Lundi.classList.add("show")
                 }
                 else if (planninglink[i].hash =="#Mardi"){
                     hideAll();
+                    planning.classList.remove('hide');
+                    planning.classList.add('show');
                     Mardi.classList.remove("hide")
                     Mardi.classList.add("show")
                 }
                 else if (planninglink[i].hash =="#Mercredi"){
                     hideAll();
+                    planning.classList.remove('hide');
+                    planning.classList.add('show');
                     Mercredi.classList.remove("hide")
                     Mercredi.classList.add("show")
                 }
                 else if (planninglink[i].hash =="#Jeudi"){
                     hideAll();
+                    planning.classList.remove('hide');
+                    planning.classList.add('show');
                     Jeudi.classList.remove("hide")
                     Jeudi.classList.add("show")
                 }
                 else if (planninglink[i].hash =="#Vendredi"){
                     hideAll();
+                    planning.classList.remove('hide');
+                    planning.classList.add('show');
                     Vendredi.classList.remove("hide")
                     Vendredi.classList.add("show")
                 }
                 else if (planninglink[i].hash =="#Samedi"){
                     hideAll();
+                    planning.classList.remove('hide');
+                    planning.classList.add('show');
                     Samedi.classList.remove("hide")
                     Samedi.classList.add("show")
                 }
                 else if (planninglink[i].hash =="#Dimanche"){
                     hideAll();
+                    planning.classList.remove('hide');
+                    planning.classList.add('show');
                     Dimanche.classList.remove("hide")
                     Dimanche.classList.add("show")
                 }
