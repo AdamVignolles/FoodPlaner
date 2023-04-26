@@ -76,6 +76,17 @@ body
   border-radius: 10px;
 }
 
+.navplanning a.click{
+  text-decoration: none;
+  color: #000 ;
+  margin: 10px;
+}
+.navplanning a.clicked{
+  text-decoration: none;
+  color: #175 ;
+  margin: 10px;
+}
+
 /* nav */
 nav.menu_recette{
   display: flex;
