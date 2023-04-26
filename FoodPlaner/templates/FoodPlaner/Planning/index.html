@@ -746,7 +746,14 @@
             </div>
         </div>
         <div id="liste-de-course" class="hide card">
-            <h1>Liste de course</h1>
+            <div class="content">
+                <h1>Liste de course</h1>
+                <div class="ingredients">
+                    {% for ingredient in liste_de_courses %}
+                        <a class="ingredient">{{ingredient}}</a>
+                    {% endfor %}
+                </div>                
+            </div>
         </div>
     </div>
 
@@ -987,7 +994,15 @@
             console.log(cree_recette.classList);
         });
     
-        
+        let ingredients = document.querySelectorAll('a.ingredient');
+        for (let i = 0; i < ingredients.length; i++) {
+            ingredients[i].addEventListener('click', function() {
+                if (ingredients[i].style.textDecoration == "line-through")
+                    ingredients[i].style.textDecoration = "none";
+                else
+                    ingredients[i].style.textDecoration = "line-through";
+            });
+        }
     </script>
 </body>
 </html>
