@@ -102,22 +102,15 @@ def planning(request, user=None):
     recettes_favorites = user["recettes_favorites"]
     recettes_creation = user["recettes_creation"]
 
-    print(recettes)
-
     liste_de_courses = []
     for i in user["planning"]:
-        print(user["planning"][i])
         for j in user["planning"][i]:
-            print(j in recettes)
-            print(recettes[j])
             if j in recettes:
                 ingredient = recettes[j]["ingredients"]
-                print(ingredient)
                 for k in ingredient:
                     liste_de_courses.append(k)
     #trié par ordre alphabétique
     liste_de_courses.sort()
-    print(liste_de_courses)
 
     mr.retirer_path_img(recettes, recettes_favorites, recettes_creation)
     mr.get_relative_img(recettes, recettes_favorites, recettes_creation, link_image)
