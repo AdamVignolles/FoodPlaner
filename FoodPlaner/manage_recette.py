@@ -34,15 +34,15 @@ def get_relative_img(recettes:dict, recettes_favorites:dict, recettes_creation:d
 def retirer_path_img(recettes:dict, recettes_favorites:dict, recettes_creation:dict) -> str:
     """Return the relative path of the image"""
     for recette in recettes:
-        if "static/img/" in recettes[recette]["img"]:
+        if "static/img/recettes/" in recettes[recette]["img"]:
             recettes[recette]['img'] = recettes[recette]["img"].split("/")[-1]
 
     for recette in recettes_favorites:
-        if "static/img/" in recettes_favorites[recette]["img"]:
+        if "static/img/recettes/" in recettes_favorites[recette]["img"]:
             recettes_favorites[recette]['img'] = recettes_favorites[recette]["img"].split("/")[-1]
 
     for recette in recettes_creation:
-        if "static/img/" in recettes_creation[recette]["img"]:
+        if "static/img/recettes/" in recettes_creation[recette]["img"]:
             recettes_creation[recette]['img'] = recettes_creation[recette]["img"].split("/")[-1]
 
 
@@ -73,7 +73,8 @@ def sup_recette(username:str, recette:str, users_file:str, recettes_file:str):
 def add_planning(recette, day, username:str, users_file:str, recettes_file:str):
     """Add the recipe to the planning"""
     users = open_json(users_file)
-    users[username]["planning"][day].append(recette)
+    if recette not  in users[username]["planning"][day]:
+        users[username]["planning"][day].append(recette)
     save_json(users_file, users)
 
 def cree_recette(nom, author, ingredients, derouler, img, users_file:str, recettes_file:str):
