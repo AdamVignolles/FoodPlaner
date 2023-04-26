@@ -164,7 +164,8 @@ def planning(request, user=None):
 
             if "add_planning" in request.POST:
                 recette = request.POST.get("add_planning")
-                jour = request.POST.get("jour")
+                jour = request.POST.get("day")
+                print(recette, jour, username, user_file, recettes_file)
                 mr.add_planning(recette, jour, username, user_file, recettes_file)
 
     
