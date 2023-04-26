@@ -104,7 +104,7 @@
                                
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}} lundi">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
@@ -165,7 +165,7 @@
                                 </div>
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}} mardi">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
@@ -225,7 +225,7 @@
                                 </div>
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}mercredi">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
@@ -286,7 +286,7 @@
                                 </div>
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}} jeudi">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
@@ -347,7 +347,7 @@
                                 </div>
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}} vendredi">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
@@ -408,7 +408,7 @@
                                 </div>
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}} samedi">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
@@ -468,7 +468,7 @@
                                 </div>
                                 <form  method="POST">
                                     {% csrf_token %}
-                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}}">
+                                    <button id="sup" type="submit" name="sup_recette_planning" value="{{id}} dimanche">
                                         <p>Supprimer</p>
                                     </button>
                                 </form>
@@ -818,6 +818,12 @@
             Vendredi.classList.add('hide');
             Samedi.classList.add('hide');
             Dimanche.classList.add('hide');
+            let planninglink = document.querySelectorAll(".navplanning ul a") ;
+            for (let i = 0; i < planninglink.length; i++) {
+                planninglink[i].classList.remove("clicked")
+                planninglink[i].classList.add("click") 
+            }
+
 
         }
 
@@ -897,6 +903,7 @@
                     planning.classList.add('show');
                     Lundi.classList.remove("hide")
                     Lundi.classList.add("show")
+                    planninglink[i].classList.add("clicked")
                 }
                 else if (planninglink[i].hash =="#Mardi"){
                     hideAll();
@@ -904,6 +911,7 @@
                     planning.classList.add('show');
                     Mardi.classList.remove("hide")
                     Mardi.classList.add("show")
+                    planninglink[i].classList.add("clicked")
                 }
                 else if (planninglink[i].hash =="#Mercredi"){
                     hideAll();
@@ -911,6 +919,7 @@
                     planning.classList.add('show');
                     Mercredi.classList.remove("hide")
                     Mercredi.classList.add("show")
+                    planninglink[i].classList.add("clicked")
                 }
                 else if (planninglink[i].hash =="#Jeudi"){
                     hideAll();
@@ -918,6 +927,7 @@
                     planning.classList.add('show');
                     Jeudi.classList.remove("hide")
                     Jeudi.classList.add("show")
+                    planninglink[i].classList.add("clicked")
                 }
                 else if (planninglink[i].hash =="#Vendredi"){
                     hideAll();
@@ -925,6 +935,7 @@
                     planning.classList.add('show');
                     Vendredi.classList.remove("hide")
                     Vendredi.classList.add("show")
+                    planninglink[i].classList.add("clicked")
                 }
                 else if (planninglink[i].hash =="#Samedi"){
                     hideAll();
@@ -932,6 +943,7 @@
                     planning.classList.add('show');
                     Samedi.classList.remove("hide")
                     Samedi.classList.add("show")
+                    planninglink[i].classList.add("clicked")
                 }
                 else if (planninglink[i].hash =="#Dimanche"){
                     hideAll();
@@ -939,6 +951,7 @@
                     planning.classList.add('show');
                     Dimanche.classList.remove("hide")
                     Dimanche.classList.add("show")
+                    planninglink[i].classList.add("clicked")
                 }
 
             });

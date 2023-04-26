@@ -168,6 +168,13 @@ def planning(request, user=None):
                 print(recette, jour, username, user_file, recettes_file)
                 mr.add_planning(recette, jour, username, user_file, recettes_file)
 
+            if "sup_recette_planning" in request.POST:
+                response = request.POST.get("sup_recette_planning").split(" ")
+                recette,jour=response[0],response[1]
+                del users[username]["planning"][jour][recette]
+                mr.save_json(user_file,users)
+
+
     
     #emepcher les formulaire de se renvoier quand on rafraichit la page
     if request.method == "POST":
