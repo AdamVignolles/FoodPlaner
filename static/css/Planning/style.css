@@ -53,6 +53,29 @@ body
   -webkit-touch-callout: none;
 }
 
+#planning{
+  display: flex ;
+  flex-direction: column;
+  color: #000 ;
+  font-size: 20px ;
+  border: 1px solid #999;
+  border-radius: 10px;
+  width: 80% ;
+  align-items: center;
+  justify-content: center;
+}
+
+.navplanning a{
+  text-decoration: none;
+  color: #000 ;
+  margin: 10px;
+}
+
+.navplanning {
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+
 /* nav */
 nav.menu_recette{
   display: flex;
@@ -514,4 +537,11 @@ button{
 }
 .add_planning select:hover{
   color: #000;
+}
+#planning.show{
+  display: flex;
+
+}
+#planning.hide{
+  display: none;
 }
