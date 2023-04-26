@@ -73,8 +73,7 @@ def sup_recette(username:str, recette:str, users_file:str, recettes_file:str):
 def add_planning(recette, day, username:str, users_file:str, recettes_file:str):
     """Add the recipe to the planning"""
     users = open_json(users_file)
-    recettes = open_json(recettes_file)
-    users[username]["planning"][day] = recettes[recette]
+    users[username]["planning"][day].append(recette)
     save_json(users_file, users)
 
 def cree_recette(nom, author, ingredients, derouler, img, users_file:str, recettes_file:str):
