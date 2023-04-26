@@ -77,11 +77,14 @@ def add_planning(recette, day, username:str, users_file:str, recettes_file:str):
     users[username]["planning"][day] = recettes[recette]
     save_json(users_file, users)
 
-def cree_recette(nom, author, ingredients, derouler, img, recettes_file:str, users_file:str):
+def cree_recette(nom, author, ingredients, derouler, img, users_file:str, recettes_file:str):
     """cree une nouvelle recette"""
     recettes = open_json(recettes_file)
     users = open_json(users_file)
-    id = str(int(recettes[str(len(recettes))]["id"]) + 1)
+    # get the last id of the recettes dict and add 1
+    len_recettes = len(recettes)
+    id = str(int(list(recettes.keys())[len_recettes-1]) + 1)
+    
     recette = {
         "id": id,
         "nom": nom,

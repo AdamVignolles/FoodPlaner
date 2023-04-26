@@ -140,10 +140,11 @@ def planning(request, user=None):
                 # download image
                 if img != "":
                     image_file = request.FILES.get("img")
-                    with open(f'{BASE_DIR}\\static\\img', 'w') as destination:
+                    img = image_file.name
+                    with open(f'{BASE_DIR}\\static\\img\\recettes\\{img}', 'wb+') as destination:
                         for chunk in image_file.chunks():
                             destination.write(chunk)
-                    img = image_file.name
+                    
 
                 else:
                     img = "meal.png"
@@ -166,6 +167,10 @@ def planning(request, user=None):
                 jour = request.POST.get("jour")
                 mr.add_planning(recette, jour, username, user_file, recettes_file)
 
+    
+    #emepcher les formulaire de se renvoier quand on rafraichit la page
+    if request.method == "POST":
+        return redirect("/planning")
 
     mr.get_relative_img(recettes, recettes_favorites, recettes_creation, link_image)
             
