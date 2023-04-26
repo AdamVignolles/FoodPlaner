@@ -171,7 +171,9 @@ def planning(request, user=None):
             if "sup_recette_planning" in request.POST:
                 response = request.POST.get("sup_recette_planning").split(" ")
                 recette,jour=response[0],response[1]
-                del users[username]["planning"][jour][recette]
+                day = users[username]["planning"][jour]
+                if recette in day:
+                    day.remove(recette)
                 mr.save_json(user_file,users)
 
 
