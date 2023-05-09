@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/User/style.css' %}">    <title>User Page</title>
 </head>
 <body>
+    <a class="retour" href="/planning/"><img src="{% static 'img/retour.png' %}">Planning</a>
     <main>
         <div class="menu">
             <h2>Profile Setting</h1>
@@ -96,22 +97,6 @@
             }
         });
 
-
-        window.onload = (event) => {
-            let username = localStorage.getItem('username');
-
-            // submit form
-            if (document.getElementById("username").value != username) {
-                document.getElementById("username").value = username;
-                document.getElementsByName("change_password").value = username;
-                document.user_form.submit();
-            }
-            
-        };
-
-        function logout_user() {
-            localStorage.removeItem('username');
-        };
 
     </script>
 

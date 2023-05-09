@@ -2,7 +2,7 @@ body
 {
   margin: 0;
   padding: 0;
-  color: #fff;
+  color: #000;
   font-family: "Avenir Next", "Avenir", sans-serif;
 }
 
@@ -53,6 +53,88 @@ body
   -webkit-touch-callout: none;
 }
 
+/* planning */
+
+#planning{
+  display: flex ;
+  flex-direction: column;
+  color: #000 ;
+  font-size: 20px ;
+  border: 1px solid #999;
+  border-radius: 10px;
+  width: 80% ;
+  align-items: center;
+  justify-content: center;
+}
+
+.navplanning a{
+  text-decoration: none;
+  color: #000 ;
+  margin: 10px;
+}
+
+.navplanning {
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+
+.navplanning a.click{
+  text-decoration: none;
+  color: #000 ;
+  margin: 10px;
+}
+.navplanning a.clicked{
+  text-decoration: none;
+  color: #175 ;
+  margin: 10px;
+}
+
+/* liste de courses*/
+
+#liste-de-course{
+  display: flex ;
+  flex-direction: column;
+  color: #000 ;
+  font-size: 20px ;
+  align-items: center;
+  justify-content: center;
+  width: 100% ;
+}
+#liste-de-course .content
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #999;
+  border-radius: 10px;
+  margin: 10px;
+  width: 80%;
+}
+
+#liste-de-course .ingredients{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #999;
+  border-radius: 10px;
+  padding: 30px;
+  margin: 10px;
+}
+
+#liste-de-course .ingredients a{
+  text-decoration: none;
+  color: #000;
+  font-size: 15px;
+  margin: 5px;
+  cursor: pointer;
+}
+#liste-de-course .ingredients a:hover{
+  transform: scale(1.1);
+  transition: 0.5s ease-in-out;
+}
+
+
 /* nav */
 nav.menu_recette{
   display: flex;
@@ -66,16 +148,18 @@ nav.menu_recette{
 }
 nav.menu_recette a{
   text-decoration: none;
-  color: #000;
+  color: #999;
   font-size: 20px;
   margin: 10px;
-  transition: color 1s ease-in-out;
 }
 nav.menu_recette a:hover{
-   background-color: #999;
-   border-radius: 10px;
-   box-shadow: #000 0px 0px 10px;
+  color: #000;
 }
+nav.menu_recette a:active{
+  color: #000;
+}
+
+
 
 
 /*
@@ -299,7 +383,23 @@ header img{
 
 /*recettes creations*/
 
+.top{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.top h3{
+  color: #000;
+  text-align: center;
+  padding-left: 40%;
 
+}
+.top a{
+  color: #000;
+  text-align: center;
+  cursor: pointer;
+  padding-left: 25%;
+}
 
 .hide{
   display: none;
@@ -308,9 +408,19 @@ header img{
   display: block;
 }
 
+.info_recette .top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .info_recette.show{
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
 .info_recette.hide{
   display: none;
 }
@@ -340,6 +450,85 @@ header img{
 #favorite.hide{
   display: none;
 }
+#favorite .info_recette.show{
+  display: flex;
+  flex-direction: row;
+}
+#favorite .recette_card .info_recette.hide{
+  display: none;
+}
+
+#rechercher_recette .info_recette.show{
+  display : flex;
+  flex-direction: row;
+}
+
+#rechercher_recette .info_recette.hide{
+  display: none;
+}
+
+#cree_recette.show{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #999;
+  border-radius: 10px;
+  margin: 10px;
+  width: 100%;
+}
+#cree_recette.hide{
+  display: none;
+}
+
+#cree_recette form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+#cree_recette form .top{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  margin-bottom: 20px;
+}
+#cree_recette form .middle{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+#cree_recette form .bottom{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+#cree_recette form .bottom button{
+  width: 100%;
+  margin: 10px;
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  width: 50px;
+  border-radius: 4px;
+}
+
+.custom-file-upload img {
+  vertical-align: middle;
+  margin-right: 10px;
+  width: 50px;
+}
+
 
 button{
   background-color: #fff;
@@ -348,4 +537,82 @@ button{
   text-align: center;
   align-items: center;
   cursor: pointer;
+}
+#rechercher_recette.show{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #999;
+  border-radius: 10px;
+  margin: 10px;
+  width: 100%;
+}
+#rechercher_recette form{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+}
+#rechercher_recette .top{
+  display:flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+#rechercher_recette .top h3{
+  padding-left: 25%;
+}
+
+#rechercher_recette form input{
+  margin: 5px;
+  border: 1px solid #999;
+  border-radius: 10px;
+  width: 200px;
+}
+.add_planning{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  border: 1px solid #999;
+  border-radius: 10px;
+  margin: 20px;
+}
+.add_planning button{
+  margin: 5px;
+  color: #999;
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+.add_planning button:hover{
+  color: #000;
+}
+.add_planning select{
+  margin: 5px;
+  color: #999;
+  border: 1px solid #999;
+  border-radius: 10px;
+}
+.add_planning select:hover{
+  color: #000;
+}
+
+
+
+#planning.show{
+  display: flex;
+
+}
+#planning.hide{
+  display: none;
+}
+
+#liste-de-course.show{
+  display: flex;
+}
+#liste-de-course.hide{
+  display: none;
 }

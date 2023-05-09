@@ -1,8 +1,9 @@
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.conf import settings
-import json
 import os
+import FoodPlaner.manage_user as mu
+import FoodPlaner.manage_loggin as ml
+import FoodPlaner.manage_recette as mr
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,156 +14,188 @@ def acceuil(request):
 def loggin(request):
     if request.method == "POST":
 
+        user_file = f"{BASE_DIR}\\static\\json\\users.json"
+
         if "txt" in request.POST.keys():
-            username = str(request.POST["txt"])
-            email = str(request.POST["email"])
-            password = str(request.POST["pswd"])
-
-            # create a new account in json file
-            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                users = json.load(file)
-            # check email and username are not already used
-            for user in users:
-                user = users[user]
-                if user["email"] == email or user["username"] == username:
-                    return render(request, "FoodPlaner/Loggin/index.html", {"error_sign_up": "Email or username already used"})
-            # add the new user
-            users[username] = {"email": email, "password": password, 'loggin': True, "username": username, "avatar": "basic.png", "recettes_favorites": {}, "recettes_creation":{}}
-
-            with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                json.dump(users, file)
-
-            response = redirect("/planning")
-            response.set_cookie("username", user["username"])
             
-            return response
-                    
+            reponse = ml.create_sign_up(request, user_file)
+
+            if reponse[0] == True:
+
+                response = redirect("/planning")
+                response.set_cookie("username", reponse[1])
+                return response
+        
+            else:
+                return render(request, "FoodPlaner/Loggin/index.html", {"error_sign_up": reponse[1]})
+             
         else : 
             if "email" in request.POST.keys() and "pswd" in request.POST.keys():
-                email = str(request.POST["email"])
-                password = str(request.POST["pswd"])
+                
+                reponse = ml.login_user(request, user_file)
 
-                # check if the email and password are correct
-                with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                    users = json.load(file)
-
-                for user in users:
-                    user = users[user]
-                    if user["email"] == email and user["password"] == password:
-                        user["login"] = True
+                if reponse[0] == True:
 
                     response = redirect("/planning")
-                    response.set_cookie("username", user["username"])
-                    
+                    response.set_cookie("username", reponse[1])
                     return response
-                    
 
-                return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect", "email": email})
+                else:
+
+                    return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": reponse[1]})
             
     else:
         return render(request, "FoodPlaner/Loggin/index.html")
     
 def user(request, user=None):
 
+    user = request.COOKIES['username']
+    user_file = f"{BASE_DIR}\\static\\json\\users.json"
+    users = mu.open_json(user_file)
+
     if request.method == "POST":
-        if user != None:
-            if request.POST.get("logout") == "logout":
-                with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                    users = json.load(file)
-                users[user]["loggin"] = False
-                with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                    json.dump(users, file)
-                return redirect("/")
-        if "user" in request.POST:
-            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                users = json.load(file)
-            current_user = request.POST.get("user")
-            return render(request, "FoodPlaner/User/index.html", {"username": current_user, "error": False,"email": users[current_user]["email"]})
+        
         if "logout" in request.POST:
+
+            mu.logout_user(request)
             return redirect("/")
+        
         if "change_password" in request.POST:
-            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                users = json.load(file)
-            user = request.POST.get("change_password").split(" ")[1]
-            if request.POST.get("old_password") == users[user]["password"]:
-                if request.POST.get("new_password") != request.POST.get("new_password2"):
-                    return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": "The new password is not the same"})
-                else:
-                    users[user]["password"] = request.POST.get("new_password")
-                    with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                        json.dump(users, file)
+
+            reponse = mu.change_password(request, user, users, user_file)
+            if reponse == True:
                 return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": False, "password_changed": True})
             else:
-                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": "The old password is incorrect"})
+                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": reponse})
+            
         if "delete_account" in request.POST:
-            with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-                users = json.load(file)
-            user = request.POST.get("delete_account")
-            if request.POST.get("password") == users[user]["password"]:
-                del users[user]
-                with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                    json.dump(users, file)
+            
+            reponse = mu.delete_account(request, user, users, user_file)
+            if reponse == True:
                 return redirect("/")
             else:
-                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": "The password is incorrect"})
-                
-    return render(request, "FoodPlaner/User/index.html", {"username": user})
+                return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": True, "error_password": reponse})
+
+    
+
+    return render(request, "FoodPlaner/User/index.html", {"username": user, "email": users[user]["email"], "error": False})
 
 def planning(request, user=None):
 
-    with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
-        users = json.load(file)
-
-    with open(f"{BASE_DIR}\\static\\json\\recettes.json", "r") as file:
-        recettes = json.load(file)
-
     username = request.COOKIES['username']
-    for user in users:
-        if users[user]["username"] == username:
-            user = users[user]
 
-            path = settings.STATIC_URL + "img/avatar"
-            img_list = os.listdir(BASE_DIR + path + "/")
-            base_image = "http://127.0.0.1:8000/static/img/avatar/" + img_list[1]
-            link_image = "http://127.0.0.1:8000/static/img/"
-            recettes_favorites = user["recettes_favorites"]
-            recettes_creation = user["recettes_creation"] 
+    user_file = f"{BASE_DIR}\\static\\json\\users.json"
+    users = mu.open_json(user_file)
 
-            if request.method == "POST":
-                    if "supfav" in request.POST:
-                        recette = request.POST.get("supfav")
-                        
-                        del user["recettes_favorites"][str(recette)]
-                        if recette in user["recettes_creation"]:
-                            recettes_creation[recette]["liked"] = False
-                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                            json.dump(users, file)
-                    if "addfav" in request.POST:
-                        recette = request.POST.get("addfav")
-                        user["recettes_favorites"][str(recette)] = user["recettes_creation"][str(recette)]
+    recettes_file = f"{BASE_DIR}\\static\\json\\recettes.json"
+    recettes = mr.open_json(recettes_file)
 
-                        print(user["recettes_favorites"])
-                        with open(f"{BASE_DIR}\\static\\json\\users.json", "w") as file:
-                            json.dump(users, file)
+    user = users[username]
+    
+    # gestion des path vers les images
+    path = "http://" + settings.ALLOWED_HOSTS[0] + ":8000" 
+    path_static = settings.STATIC_URL + "img/avatar/"
+    img_list = os.listdir(BASE_DIR + path_static + "/")
+    base_image = path + "/static/img/avatar/" + img_list[1]
+    link_image = path + "/static/img/recettes/"
 
-            for recette in recettes:
-                if not "static/img/" in recettes[recette]["img"]:
-                    recettes[recette]['img'] = link_image + recettes[recette]["img"]
+    recettes_favorites = user["recettes_favorites"]
+    recettes_creation = user["recettes_creation"]
 
-            for recette in recettes_favorites:
-                if not "static/img/" in recettes_favorites[recette]["img"]:
-                    recettes_favorites[recette]['img'] = link_image + recettes_favorites[recette]["img"]
-            for recette in recettes_creation:
-                if not "static/img/" in recettes_creation[recette]["img"]:
-                    recettes_creation[recette]['img'] = link_image + recettes_creation[recette]["img"]
+    liste_de_courses = []
+    for i in user["planning"]:
+        for j in user["planning"][i]:
+            if j in recettes:
+                ingredient = recettes[j]["ingredients"]
+                for k in ingredient:
+                    liste_de_courses.append(k)
+    #trié par ordre alphabétique
+    liste_de_courses.sort()
 
-                if recette in recettes_favorites:recettes_creation[recette]["liked"] = True
-                else:recettes_creation[recette]["liked"] = False
+    mr.retirer_path_img(recettes, recettes_favorites, recettes_creation)
+    mr.get_relative_img(recettes, recettes_favorites, recettes_creation, link_image)
+    
+
+    lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche = {}, {}, {}, {}, {}, {}, {}
+
+    for jour in user["planning"] : 
+        if user["planning"][jour] != []:
+            for i in user["planning"][jour]:
+                if i in recettes:
+                    if jour == "lundi": lundi[i] = recettes[i]
+                    elif jour == "mardi": mardi[i] = recettes[i]
+                    elif jour == "mercredi": mercredi[i] = recettes[i]
+                    elif jour == "jeudi": jeudi[i] = recettes[i]
+                    elif jour == "vendredi": vendredi[i] = recettes[i]
+                    elif jour == "samedi": samedi[i] = recettes[i]
+                    elif jour == "dimanche": dimanche[i] = recettes[i]
+
+    if request.method == "POST":
             
+            if "supfav" in request.POST:
+                recette = request.POST.get("supfav")
+                mr.sup_fav(username, recette, users, user_file)
 
-            content = {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation, "recette_recherche": recettes}
+            if "addfav" in request.POST:
+                recette = request.POST.get("addfav")
+                mr.add_fav(username, recette, recettes, users, user_file)
 
-            return render(request, "FoodPlaner/Planning/index.html", content)
+            if "cree_recette" in request.POST:
+                nom_recette = request.POST.get("nom_recette")
+                author = user["username"]
+                ingredients = request.POST.get("ingredients").split("\r\n")
+                derouler = request.POST.get("derouler").split("\r\n")
+                img = request.POST.get("img")
+
+                # download image
+                if img != "":
+                    image_file = request.FILES.get("img")
+                    img = image_file.name
+                    with open(f'{BASE_DIR}\\static\\img\\recettes\\{img}', 'wb+') as destination:
+                        for chunk in image_file.chunks():
+                            destination.write(chunk)
+                    
+
+                else:
+                    img = "meal.png"
+
+                mr.cree_recette(nom_recette, author, ingredients, derouler, img, user_file, recettes_file)
+
+            if "sup_recette" in request.POST:
+                recette = request.POST.get("sup_recette")
+                mr.sup_recette(username, recette, user_file, recettes_file)
+
+            if "search_recette" in request.POST:
+                search = request.POST.get("search")
+                recettes = {}
+                for recette in recettes_creation:
+                    if search.lower() in recettes_creation[recette]["nom"].lower() or search.lower() in recettes_creation[recette]["author"].lower():
+                        recettes[recette] = recettes_creation[recette]
+
+            if "add_planning" in request.POST:
+                recette = request.POST.get("add_planning")
+                jour = request.POST.get("day")
+                print(recette, jour, username, user_file, recettes_file)
+                mr.add_planning(recette, jour, username, user_file, recettes_file)
+
+            if "sup_recette_planning" in request.POST:
+                response = request.POST.get("sup_recette_planning").split(" ")
+                recette,jour=response[0],response[1]
+                day = users[username]["planning"][jour]
+                if recette in day:
+                    day.remove(recette)
+                mr.save_json(user_file,users)
+
+
+    
+    #emepcher les formulaire de se renvoier quand on rafraichit la page
+    if request.method == "POST":
+        return redirect("/planning")
+
+    mr.get_relative_img(recettes, recettes_favorites, recettes_creation, link_image)
             
-            
-            
+    content =  {"base_image": base_image, "username": user, "recettes_favorites": recettes_favorites, "recettes_creation": recettes_creation, "recette_recherche": recettes, "Lundi":lundi, "Mardi":mardi, "Mercredi":mercredi,"Jeudi":jeudi, "Vendredi":vendredi, "Samedi":samedi, "Dimanche":dimanche, "liste_de_courses":liste_de_courses} 
+    return render(request, "FoodPlaner/Planning/index.html", content)
+    
+    
+    
