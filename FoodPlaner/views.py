@@ -53,14 +53,8 @@ def loggin(request):
 
                     response = redirect("/planning")
                     response.set_cookie("username", user["username"])
-<<<<<<< HEAD
-                    print(user['username'])
-                    print(request.COOKIES['username'])
-                    return redirect("/planning")
-=======
                     
                     return response
->>>>>>> 281584551778842d89535c6675892ebca303133d
                     
 
                 return render(request, "FoodPlaner/Loggin/index.html", {"error_loggin": "Email or password incorrect", "email": email})
@@ -119,13 +113,9 @@ def planning(request, user=None):
     with open(f"{BASE_DIR}\\static\\json\\users.json", "r") as file:
         users = json.load(file)
 
-<<<<<<< HEAD
-    print(request.COOKIES)
-=======
     with open(f"{BASE_DIR}\\static\\json\\recettes.json", "r") as file:
         recettes = json.load(file)
 
->>>>>>> 281584551778842d89535c6675892ebca303133d
     username = request.COOKIES['username']
     for user in users:
         if users[user]["username"] == username:
